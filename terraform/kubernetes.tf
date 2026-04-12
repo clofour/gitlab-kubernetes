@@ -26,7 +26,7 @@ resource "kubernetes_secret_v1" "gitlab_redis" {
     }
 
     data = {
-        password = digitalocean_database_user.gitlab.password
+        password = digitalocean_database_cluster.valkey.password
     }
 
     type = "Opaque"
@@ -54,7 +54,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
 
 resource "kubernetes_secret_v1" "gitlab_s3_registry" {
     metadata {
-        name = "gitlab-s3-main-secret"
+        name = "gitlab-s3-registry-secret"
         namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
 
@@ -73,7 +73,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_registry" {
 
 resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     metadata {
-        name = "gitlab-s3-main-secret"
+        name = "gitlab-s3-backup-secret"
         namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
 

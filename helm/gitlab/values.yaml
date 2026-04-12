@@ -34,7 +34,7 @@ global:
         secret: gitlab-s3-main-secret
         key: connection
 
-    arifacts:
+    artifacts:
       bucket: ${buckets["artifacts"]}
       connection: {}
     uploads:

@@ -3,6 +3,7 @@ resource "helm_release" "gitlab" {
     namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     repository = "https://charts.gitlab.io/"
     chart = "gitlab"
+    version = "9.10.3"
 
     values = [
         templatefile("${path.module}/../helm/gitlab/values.yaml", {
