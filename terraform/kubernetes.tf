@@ -132,10 +132,10 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     type = "Opaque"
 }
 
-data "kubernetes_service" "ingress_nginx" {
+data "kubernetes_service_v1" "ingress_nginx" {
     metadata {
         name = "ingress-nginx-controller"
-        namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
+        namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
     }
 
     depends_on = [helm_release.ingress_nginx]
