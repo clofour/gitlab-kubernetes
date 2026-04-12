@@ -13,11 +13,11 @@ output "postgres_port" {
 }
 
 output "postgres_user" {
-    value = digitalocean_database_cluster.postgres.user.gitlab.name
+    value = digitalocean_database_user.gitlab.name
 }
 
 output "postgres_password" {
-    value = digitalocean_database_cluster.postgres.user.gitlab.password
+    value = digitalocean_database_user.gitlab.password
     sensitive = true
 }
 
@@ -41,5 +41,5 @@ output "spaces_endpoint" {
 }
 
 output "spaces_buckets" {
-    value = { for k, b in digitalocean_digitalocean_spaces_bucket.gitlab : k => b.name }
+    value = { for k, b in digitalocean_spaces_bucket.gitlab : k => b.name }
 }
