@@ -13,7 +13,7 @@ resource "helm_release" "ingress_nginx" {
 resource "helm_release" "cert_manager" {
     name = "cert-manager"
     namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
-    repository = "oci://quay.io/repository/jetstack/charts/"
+    repository = "oci://quay.io/jetstack/charts"
     chart = "cert-manager"
     version = "1.20.2"
 

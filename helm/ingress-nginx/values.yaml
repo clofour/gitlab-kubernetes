@@ -19,7 +19,7 @@ controller:
     use-proxy-protocol: "true"
     ssl-redirect: "true"
     hsts: "true"
-    hsts-max-age: "600"
+    hsts-max-age: "31536000"
     hsts-include-subdomains: "true"
     proxy-body-size: "0"
     proxy-read-timeout: "900"
