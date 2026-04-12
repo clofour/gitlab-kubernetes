@@ -41,6 +41,10 @@ variable "node_count" {
 
 variable "email" {
     type = string
+    validation {
+      condition = trimspace(var.email) != ""
+      error_message = "email must not be empty."
+    }
 }
 
 variable "domain_name" {
