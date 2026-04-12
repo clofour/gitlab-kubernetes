@@ -10,7 +10,7 @@ resource "digitalocean_database_cluster" "postgres" {
 
 resource "digitalocean_database_db" "gitlab" {
     cluster_id = digitalocean_database_cluster.postgres.id
-    name = "gitlab_production"
+    name = "gitlab"
 }
 
 resource "digitalocean_database_user" "gitlab" {

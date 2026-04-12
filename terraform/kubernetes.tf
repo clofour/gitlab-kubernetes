@@ -1,20 +1,92 @@
-data "digitalocean_kubernetes_versions" "current" {
-    version_prefix = var.k8s_version
+resource "kubernetes_namespace_v1" "gitlab" {
+    metadata {
+      name = "gitlab"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
 }
 
-resource "digitalocean_kubernetes_cluster" "main" {
-    name = var.cluster_name
-    region = var.region
-    version = data.digitalocean_kubernetes_versions.current.latest_version
-    vpc_uuid = digitalocean_vpc.main.id
-
-    auto_upgrade = false
-    surge_upgrade = true
-
-    node_pool {
-      name = "default"
-      size = var.node_size
-      node_count = var.node_count
-      labels = { role = "general" }
+resource "kubernetes_secret_v1" "gitlab_postgres" {
+    metadata {
+        name = "gitlab-postgres-secret"
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
+
+    data = {
+        password = digitalocean_database_user.gitlab.password
+    }
+
+    type = "Opaque"
+}
+
+resource "kubernetes_secret_v1" "gitlab_redis" {
+    metadata {
+        name = "gitlab-redis-secret"
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+    }
+
+    data = {
+        password = digitalocean_database_cluster.valkey.password
+    }
+
+    type = "Opaque"
+}
+
+resource "kubernetes_secret_v1" "gitlab_s3_main" {
+    metadata {
+        name = "gitlab-s3-main-secret"
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+    }
+
+    data = {
+        connection = yamlencode({
+            provider = "AWS"
+            region = var.region
+            endpoint = "https://${var.region}.digitaloceanspaces.com"
+            aws_access_key_id = var.spaces_access_id
+            aws_secret_access_key = var.spaces_secret_key
+            path_style = true
+        })
+    }
+
+    type = "Opaque"
+}
+
+resource "kubernetes_secret_v1" "gitlab_s3_registry" {
+    metadata {
+        name = "gitlab-s3-registry-secret"
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+    }
+
+    data = {
+        connection = yamlencode({
+           accesskey = var.spaces_access_id
+           secretkey = var.spaces_secret_key
+           region = var.region
+           regionendpoint = "https://${var.region}.digitaloceanspaces.com"
+           bucket = digitalocean_spaces_bucket.gitlab["registry"].name
+        })
+    }
+
+    type = "Opaque"
+}
+
+resource "kubernetes_secret_v1" "gitlab_s3_backup" {
+    metadata {
+        name = "gitlab-s3-backup-secret"
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+    }
+
+    data = {
+        connection = yamlencode({
+            provider = "AWS"
+            region = var.region
+            endpoint = "https://${var.region}.digitaloceanspaces.com"
+            aws_access_key_id = var.spaces_access_id
+            aws_secret_access_key = var.spaces_secret_key
+            path_style = true
+        })
+    }
+
+    type = "Opaque"
 }
