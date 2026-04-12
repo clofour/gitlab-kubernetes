@@ -1,3 +1,27 @@
+resource "helm_release" "ingress_nginx" {
+    name = "ingress-nginx"
+    namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
+    repository = "https://kubernetes.github.io/ingress-nginx"
+    chart = "ingress-nginx"
+    version = "4.15.1"
+
+    values = [
+        file("${path.module}/../helm/ingress-nginx/values.yaml")
+    ]
+}
+
+resource "helm_release" "cert_manager" {
+    name = "cert-manager"
+    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
+    repository = "oci://quay.io/jetstack/charts"
+    chart = "cert-manager"
+    version = "1.20.2"
+
+    values = [
+        file("${path.module}/../helm/cert-manager/values.yaml")
+    ]
+}
+
 resource "helm_release" "gitlab" {
     name = "gitlab"
     namespace = kubernetes_namespace_v1.gitlab.metadata[0].name

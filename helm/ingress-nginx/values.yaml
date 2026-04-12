@@ -1,0 +1,32 @@
+controller:
+  replicaCount: 2
+
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/do-name: "gitlab-lb"
+      service.beta.kubernetes.io/do-loadbalancer-protocol: "tcp"
+      service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
+      service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+    externalTrafficPolicy: Local
+
+  config:
+    use-proxy-protocol: "true"
+    ssl-redirect: "true"
+    hsts: "true"
+    hsts-max-age: "31536000"
+    hsts-include-subdomains: "true"
+    proxy-body-size: "0"
+    proxy-read-timeout: "900"
+    proxy-send-timeout: "900"
+
+  metrics:
+    enabled: true
+
+defaultBackend:
+  enabled: true

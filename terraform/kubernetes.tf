@@ -1,9 +1,31 @@
+resource "kubernetes_namespace_v1" "ingress_nginx" {
+    metadata {
+      name = "ingress-nginx"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "cert_manager" {
+    metadata {
+      name = "cert-manager"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
 resource "kubernetes_namespace_v1" "gitlab" {
     metadata {
       name = "gitlab"
     }
 
     depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_manifest" "cluster_issuer" {
+    manifest = yamldecode(file("${path.module}/../kubernetes/cluster-issuer.yaml"))
+
+    depends_on = [ helm_release.cert_manager ]
 }
 
 resource "kubernetes_secret_v1" "gitlab_postgres" {

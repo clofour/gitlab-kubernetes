@@ -9,6 +9,14 @@ global:
     registry:
       name: ${registry_host}.${domain}
 
+  ingress:
+    configureCertmanager: false
+    class: nginx
+    tls:
+      enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+
   psql:
     host: ${postgres_host}
     port: ${postgres_port}
@@ -48,16 +56,20 @@ global:
       connection: {}
     backups:
       bucket: ${buckets["backups"]}
-      tmpBucket: ${buckets["backups"]}
+      tmpBucket: ${buckets["tmp"]}
 
   time_zone: UTC
 
 
 postgresql:
   install: false
-
 redis:
   install: false
-
 minio:
+  install: false
+prometheus:
+  install: false
+nginx-ingress:
+  enabled: false
+certmanager:
   install: false

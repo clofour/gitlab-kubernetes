@@ -1,0 +1,8 @@
+crds:
+  enabled: true
+  keep: true
+
+replicaCount: 1
+
+prometheus:
+  enabled: true
