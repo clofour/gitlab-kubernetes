@@ -1,0 +1,27 @@
+name: terraform-validate
+on:
+  push:
+    branches:
+      - main
+      - dev
+jobs:
+  validate:
+    name: Terraform Validate
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./terraform
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.1.7"
+
+      - name: Initialize Terraform project
+        run: terraform init -backend=false
+
+      - name: Run Terraform Validate
+        run: terraform validate
