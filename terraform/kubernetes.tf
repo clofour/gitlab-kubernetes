@@ -64,7 +64,7 @@ resource "kubernetes_secret" "gitlab_s3_registry" {
            secretkey = var.spaces_secret_key
            region = var.region
            regionendpoint = "https://${var.region}.digitaloceanspaces.com"
-           bucket = digitalocean_spaces_bucket.gitlab.registry.name
+           bucket = digitalocean_spaces_bucket.gitlab["registry"].name
         })
     }
 
