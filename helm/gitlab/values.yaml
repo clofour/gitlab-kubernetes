@@ -48,7 +48,7 @@ global:
       connection: {}
     backups:
       bucket: ${buckets["backups"]}
-      tmpBucket: ${buckets["backups"]}
+      tmpBucket: ${buckets["tmp"]}
 
   time_zone: UTC
 
