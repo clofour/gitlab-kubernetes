@@ -3,6 +3,11 @@ output "kubeconfig" {
     sensitive = true
 }
 
+output "gitlab_initial_root_password" {
+    value = random_password.gitlab_root.result
+    sensitive = true
+}
+
 
 output "postgres_host" {
     value = digitalocean_database_cluster.postgres.private_host

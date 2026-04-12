@@ -1,6 +1,10 @@
 global:
   edition: ce
 
+  initialRootPassword:
+    secret: gitlab-initial-root-password
+    key: password
+
   hosts:
     domain: ${domain}
     https: true
@@ -27,6 +31,7 @@ global:
       key: password
 
   redis:
+    scheme: rediss
     host: ${redis_host}
     port: ${redis_port}
     auth:
@@ -59,6 +64,9 @@ global:
       tmpBucket: ${buckets["tmp"]}
 
   time_zone: UTC
+
+  extraEnv:
+    PGSSLMODE: require
 
 
 postgresql:

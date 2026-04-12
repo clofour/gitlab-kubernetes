@@ -39,6 +39,10 @@ variable "node_count" {
     default = 2
 }
 
+variable "email" {
+    type = string
+}
+
 variable "domain_name" {
     type = string
 }

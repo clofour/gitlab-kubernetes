@@ -9,7 +9,7 @@ controller:
   service:
     type: LoadBalancer
     annotations:
-      service.beta.kubernetes.io/do-name: "gitlab-lb"
+      service.beta.kubernetes.io/do-loadbalancer-name: "gitlab-lb"
       service.beta.kubernetes.io/do-loadbalancer-protocol: "tcp"
       service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
       service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"

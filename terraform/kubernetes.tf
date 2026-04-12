@@ -23,9 +23,28 @@ resource "kubernetes_namespace_v1" "gitlab" {
 }
 
 resource "kubernetes_manifest" "cluster_issuer" {
-    manifest = yamldecode(file("${path.module}/../kubernetes/cluster-issuer.yaml"))
+    manifest = yamldecode(templatefile("${path.module}/../kubernetes/cluster-issuer.yaml", {
+        email = var.email
+    }))
 
     depends_on = [ helm_release.cert_manager ]
+}
+
+resource "random_password" "gitlab_root" {
+    length = 64
+}
+
+resource "kubernetes_secret_v1" "gitlab_initial_root_password" {
+    metadata {
+        name = "gitlab-initial-root-password"
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+    }
+
+    data = {
+        password = random_password.gitlab_root.result
+    }
+
+    type = "Opaque"
 }
 
 resource "kubernetes_secret_v1" "gitlab_postgres" {
@@ -111,4 +130,13 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     }
 
     type = "Opaque"
+}
+
+data "kubernetes_service" "ingress_nginx" {
+    metadata {
+        name = "ingress-nginx-controller"
+        namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
+    }
+
+    depends_on = [helm_release.ingress_nginx]
 }
