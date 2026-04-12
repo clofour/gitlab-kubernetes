@@ -1,5 +1,5 @@
 locals {
-    spaces = toset([
+    buckets = toset([
         "artifacts", "lfs", "uploads", "packages",
         "registry", "backups", "tmp", "ci-secure-files",
         "dependency-proxy", "terraform-state", "pages"
@@ -11,7 +11,7 @@ resource "random_id" "suffix" {
 }
 
 resource "digitalocean_spaces_bucket" "gitlab" {
-    for_each = local.spaces
+    for_each = local.buckets
     name = "${var.cluster_name}-${each.key}-${random_id.suffix.hex}"
     region = var.region
     acl = "private"

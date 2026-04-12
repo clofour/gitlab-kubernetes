@@ -1,0 +1,63 @@
+global:
+  edition: ce
+
+  hosts:
+    domain: ${domain}
+    https: true
+    gitlab:
+      name: ${gitlab_host}.${domain}
+    registry:
+      name: ${registry_host}.${domain}
+
+  psql:
+    host: ${postgres_host}
+    port: ${postgres_port}
+    database: ${postgres_database}
+    username: ${postgres_username}
+    password:
+      secret: gitlab-postgres-secret
+      key: password
+
+  redis:
+    host: ${redis_host}
+    port: ${redis_port}
+    auth:
+      enabled: true
+      secret: gitlab-redis-secret
+      key: password
+
+  appConfig:
+    object_store:
+      enabled: true
+      proxy_download: true
+      connection:
+        secret: gitlab-s3-main-secret
+        key: connection
+
+    arifacts:
+      bucket: ${bucket["artifacts"]}
+      connection: {}
+    uploads:
+      bucket: ${bucket["uploads"]}
+      connection: {}
+    packages:
+      bucket: ${bucket["packages"]}
+      connection: {}
+    lfs:
+      bucket: ${bucket["lfs"]}
+      connection: {}
+    backups:
+      bucket: ${bucket["backups"]}
+      tmpBucket: ${bucket["backups"]}
+
+  time_zone: UTC
+
+
+postgresql:
+  install: false
+
+redis:
+  install: false
+
+minio:
+  install: false
