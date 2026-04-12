@@ -1,6 +1,6 @@
 resource "helm_release" "gitlab" {
     name = "gitlab"
-    namespace = kubernetes_namespace.gitlab.metadata[0].name
+    namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     repository = "https://charts.gitlab.io/"
     chart = "gitlab"
 
@@ -20,10 +20,9 @@ resource "helm_release" "gitlab" {
     ]
 
     depends_on = [
-        kubernetes_secret.gitlab_postgres,
-        kubernetes_secret.gitlab_redis,
-        kubernetes_secret.gitlab_s3_main,
-        digitalocean_database_db.postgres,
-        digitalocean_database_db.valkey
+        kubernetes_secret_v1.gitlab_postgres,
+        kubernetes_secret_v1.gitlab_redis,
+        kubernetes_secret_v1.gitlab_s3_main,
+        digitalocean_database_db.gitlab
     ]
 }

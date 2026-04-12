@@ -35,20 +35,20 @@ global:
         key: connection
 
     arifacts:
-      bucket: ${bucket["artifacts"]}
+      bucket: ${buckets["artifacts"]}
       connection: {}
     uploads:
-      bucket: ${bucket["uploads"]}
+      bucket: ${buckets["uploads"]}
       connection: {}
     packages:
-      bucket: ${bucket["packages"]}
+      bucket: ${buckets["packages"]}
       connection: {}
     lfs:
-      bucket: ${bucket["lfs"]}
+      bucket: ${buckets["lfs"]}
       connection: {}
     backups:
-      bucket: ${bucket["backups"]}
-      tmpBucket: ${bucket["backups"]}
+      bucket: ${buckets["backups"]}
+      tmpBucket: ${buckets["backups"]}
 
   time_zone: UTC
 

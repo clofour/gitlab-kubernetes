@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "gitlab" {
+resource "kubernetes_namespace_v1" "gitlab" {
     metadata {
       name = "gitlab"
     }
@@ -6,10 +6,10 @@ resource "kubernetes_namespace" "gitlab" {
     depends_on = [ digitalocean_kubernetes_cluster.main ]
 }
 
-resource "kubernetes_secret" "gitlab_postgres" {
+resource "kubernetes_secret_v1" "gitlab_postgres" {
     metadata {
         name = "gitlab-postgres-secret"
-        namespace = kubernetes_namespace.gitlab.metadata[0].name
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
 
     data = {
@@ -19,10 +19,10 @@ resource "kubernetes_secret" "gitlab_postgres" {
     type = "Opaque"
 }
 
-resource "kubernetes_secret" "gitlab_redis" {
+resource "kubernetes_secret_v1" "gitlab_redis" {
     metadata {
         name = "gitlab-redis-secret"
-        namespace = kubernetes_namespace.gitlab.metadata[0].name
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
 
     data = {
@@ -32,10 +32,10 @@ resource "kubernetes_secret" "gitlab_redis" {
     type = "Opaque"
 }
 
-resource "kubernetes_secret" "gitlab_s3_main" {
+resource "kubernetes_secret_v1" "gitlab_s3_main" {
     metadata {
         name = "gitlab-s3-main-secret"
-        namespace = kubernetes_namespace.gitlab.metadata[0].name
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
 
     data = {
@@ -52,10 +52,10 @@ resource "kubernetes_secret" "gitlab_s3_main" {
     type = "Opaque"
 }
 
-resource "kubernetes_secret" "gitlab_s3_registry" {
+resource "kubernetes_secret_v1" "gitlab_s3_registry" {
     metadata {
         name = "gitlab-s3-main-secret"
-        namespace = kubernetes_namespace.gitlab.metadata[0].name
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
 
     data = {
@@ -71,10 +71,10 @@ resource "kubernetes_secret" "gitlab_s3_registry" {
     type = "Opaque"
 }
 
-resource "kubernetes_secret" "gitlab_s3_backup" {
+resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     metadata {
         name = "gitlab-s3-main-secret"
-        namespace = kubernetes_namespace.gitlab.metadata[0].name
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     }
 
     data = {
