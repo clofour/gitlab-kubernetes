@@ -12,6 +12,6 @@ resource "digitalocean_record" "gitlab" {
     domain = digitalocean_domain.main.name
     type = "A"
     name = var.gitlab_host
-    value = locals.lb_ip
+    value = local.lb_ip
     ttl = 300
 }
