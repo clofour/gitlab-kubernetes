@@ -9,4 +9,5 @@ spec:
       name: letsencrypt-account-key
     solvers:
       - http01:
-          ingressClassName: nginx
+          ingress:
+            ingressClassName: nginx
