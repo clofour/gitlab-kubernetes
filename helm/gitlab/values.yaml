@@ -63,6 +63,9 @@ global:
       bucket: ${buckets["backups"]}
       tmpBucket: ${buckets["tmp"]}
 
+  minio:
+    enabled: false
+
   time_zone: UTC
 
   extraEnv:
@@ -73,11 +76,10 @@ postgresql:
   install: false
 redis:
   install: false
-minio:
+gitlab-runner:
   install: false
 prometheus:
   install: false
 nginx-ingress:
   enabled: false
-certmanager:
-  install: false
+installCertmanager: false

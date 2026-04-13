@@ -1,0 +1,5 @@
+name: letsencrypt
+server: https://acme-v02.api.letsencrypt.org/directory
+email: webmaster@example.com
+privateKeySecretName: letsencrypt-account-key
+ingressClass: nginx

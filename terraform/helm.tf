@@ -1,15 +1,3 @@
-resource "helm_release" "ingress_nginx" {
-    name = "ingress-nginx"
-    namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
-    repository = "https://kubernetes.github.io/ingress-nginx"
-    chart = "ingress-nginx"
-    version = "4.15.1"
-
-    values = [
-        file("${path.module}/../helm/ingress-nginx/values.yaml")
-    ]
-}
-
 resource "helm_release" "cert_manager" {
     name = "cert-manager"
     namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
@@ -22,12 +10,45 @@ resource "helm_release" "cert_manager" {
     ]
 }
 
+resource "helm_release" "cluster_issuer" {
+    name = "cluster-issuer"
+    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
+    chart = "${path.module}/../helm/cluster-issuer/chart"
+
+    values = [
+        templatefile("${path.module}/helm/cluster-issuer/values.yaml", 
+        {
+            email = var.email
+        })
+    ]
+
+    depends_on = [helm_release.cert_manager]
+}
+
+resource "helm_release" "ingress_nginx" {
+    name = "ingress-nginx"
+    namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
+    repository = "https://kubernetes.github.io/ingress-nginx"
+    chart = "ingress-nginx"
+    version = "4.15.1"
+
+    values = [
+        file("${path.module}/../helm/ingress-nginx/values.yaml")
+    ]
+
+    depends_on = [helm_release.cert_manager]
+}
+
 resource "helm_release" "gitlab" {
     name = "gitlab"
     namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
     repository = "https://charts.gitlab.io/"
     chart = "gitlab"
     version = "9.10.3"
+
+    timeout = 1800
+    wait = true
+    wait_for_jobs = true
 
     values = [
         templatefile("${path.module}/../helm/gitlab/values.yaml", {
@@ -45,10 +66,13 @@ resource "helm_release" "gitlab" {
     ]
 
     depends_on = [
+        digitalocean_database_db.gitlab,
+        digitalocean_database_db.valkey,
+        helm_release.cluster_issuer,
+        digitalocean_record.gitlab,
         kubernetes_secret_v1.gitlab_initial_root_password,
         kubernetes_secret_v1.gitlab_postgres,
         kubernetes_secret_v1.gitlab_redis,
-        kubernetes_secret_v1.gitlab_s3_main,
-        digitalocean_database_db.gitlab
+        kubernetes_secret_v1.gitlab_s3_main
     ]
 }

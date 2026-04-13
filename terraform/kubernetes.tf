@@ -22,14 +22,6 @@ resource "kubernetes_namespace_v1" "gitlab" {
     depends_on = [ digitalocean_kubernetes_cluster.main ]
 }
 
-resource "kubernetes_manifest" "cluster_issuer" {
-    manifest = yamldecode(templatefile("${path.module}/../kubernetes/cluster-issuer.yaml", {
-        email = var.email
-    }))
-
-    depends_on = [ helm_release.cert_manager ]
-}
-
 resource "random_password" "gitlab_root" {
     length = 64
 }
@@ -132,11 +124,16 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     type = "Opaque"
 }
 
+resource "time_sleep" "wait_for_lb" {
+    depends_on = [ helm.release.ingress_nginx ]
+    create_duration = "120s"
+}
+
 data "kubernetes_service_v1" "ingress_nginx" {
     metadata {
         name = "ingress-nginx-controller"
         namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
     }
 
-    depends_on = [helm_release.ingress_nginx]
+    depends_on = [ time_sleep.wait_for_lb ]
 }
