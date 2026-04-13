@@ -35,8 +35,6 @@ resource "helm_release" "ingress_nginx" {
     values = [
         file("${path.module}/../helm/ingress-nginx/values.yaml")
     ]
-
-    depends_on = [helm_release.cert_manager]
 }
 
 resource "helm_release" "gitlab" {
@@ -70,7 +68,9 @@ resource "helm_release" "gitlab" {
         digitalocean_database_db.gitlab,
         digitalocean_database_user.gitlab,
         digitalocean_database_cluster.valkey,
+        helm_release.cert_manager,
         helm_release.cluster_issuer,
+        helm_release.ingress_nginx,
         digitalocean_record.gitlab,
         kubernetes_secret_v1.gitlab_initial_root_password,
         kubernetes_secret_v1.gitlab_postgres,
