@@ -46,7 +46,7 @@ resource "kubernetes_secret_v1" "gitlab_postgres" {
     }
 
     data = {
-        password = digitalocean_database_user.gitlab.password
+        password = digitalocean_database_cluster.postgres.password
     }
 
     type = "Opaque"
@@ -85,24 +85,24 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
     type = "Opaque"
 }
 
-resource "kubernetes_secret_v1" "gitlab_s3_registry" {
-    metadata {
-        name = "gitlab-s3-registry-secret"
-        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
-    }
+# resource "kubernetes_secret_v1" "gitlab_s3_registry" {
+#     metadata {
+#         name = "gitlab-s3-registry-secret"
+#         namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+#     }
 
-    data = {
-        connection = yamlencode({
-           accesskey = var.spaces_access_id
-           secretkey = var.spaces_secret_key
-           region = var.region
-           regionendpoint = "https://${var.region}.digitaloceanspaces.com"
-           bucket = digitalocean_spaces_bucket.gitlab["registry"].name
-        })
-    }
+#     data = {
+#         connection = yamlencode({
+#            accesskey = var.spaces_access_id
+#            secretkey = var.spaces_secret_key
+#            region = var.region
+#            regionendpoint = "https://${var.region}.digitaloceanspaces.com"
+#            bucket = digitalocean_spaces_bucket.gitlab["registry"].name
+#         })
+#     }
 
-    type = "Opaque"
-}
+#     type = "Opaque"
+# }
 
 resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     metadata {

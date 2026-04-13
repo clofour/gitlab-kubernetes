@@ -16,7 +16,7 @@ variable "spaces_secret_key" {
 
 variable "region" {
     type = string
-    default = "fra1"
+    default = "ams3"
 }
 
 variable "cluster_name" {

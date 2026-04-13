@@ -56,7 +56,7 @@ resource "helm_release" "gitlab" {
             postgres_host = digitalocean_database_cluster.postgres.private_host
             postgres_port = digitalocean_database_cluster.postgres.port
             postgres_database = digitalocean_database_db.gitlab.name
-            postgres_username = digitalocean_database_user.gitlab.name
+            postgres_username = digitalocean_database_cluster.postgres.user
             redis_host = digitalocean_database_cluster.valkey.private_host
             redis_port = digitalocean_database_cluster.valkey.port
             buckets = {for key, bucket in digitalocean_spaces_bucket.gitlab : key => bucket.name}

@@ -59,9 +59,6 @@ global:
     lfs:
       bucket: ${buckets["lfs"]}
       connection: {}
-    backups:
-      bucket: ${buckets["backups"]}
-      tmpBucket: ${buckets["tmp"]}
 
   minio:
     enabled: false
