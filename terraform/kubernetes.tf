@@ -125,7 +125,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
 }
 
 resource "time_sleep" "wait_for_lb" {
-    depends_on = [ helm.release.ingress_nginx ]
+    depends_on = [ helm_release.ingress_nginx ]
     create_duration = "120s"
 }
 

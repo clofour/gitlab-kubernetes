@@ -16,7 +16,7 @@ resource "helm_release" "cluster_issuer" {
     chart = "${path.module}/../helm/cluster-issuer/chart"
 
     values = [
-        templatefile("${path.module}/helm/cluster-issuer/values.yaml", 
+        templatefile("${path.module}/../helm/cluster-issuer/values.yaml", 
         {
             email = var.email
         })
