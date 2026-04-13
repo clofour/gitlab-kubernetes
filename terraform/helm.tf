@@ -66,8 +66,10 @@ resource "helm_release" "gitlab" {
     ]
 
     depends_on = [
+        digitalocean_database_cluster.postgres,
         digitalocean_database_db.gitlab,
-        digitalocean_database_db.valkey,
+        digitalocean_database_user.gitlab,
+        digitalocean_database_cluster.valkey,
         helm_release.cluster_issuer,
         digitalocean_record.gitlab,
         kubernetes_secret_v1.gitlab_initial_root_password,
