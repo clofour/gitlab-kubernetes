@@ -31,7 +31,7 @@ variable "k8s_version" {
 
 variable "node_size" {
     type = string
-    default = "s-2vcpu-4gb"
+    default = "s-4vcpu-8gb"
 }
 
 variable "node_count" {

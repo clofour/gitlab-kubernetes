@@ -1,11 +1,16 @@
 resource "digitalocean_database_cluster" "postgres" {
     name = "${var.cluster_name}-postgres"
     engine = "pg"
-    version = 18
+    version = 17
     size = "db-s-1vcpu-1gb"
     region = var.region
     node_count = 1
     private_network_uuid = digitalocean_vpc.main.id
+}
+
+resource "digitalocean_database_postgresql_config" "postgres" {
+    cluster_id = digitalocean_database_cluster.postgres.id
+    max_locks_per_transaction = 256
 }
 
 resource "digitalocean_database_db" "gitlab" {
