@@ -3,6 +3,11 @@ variable "do_token" {
     sensitive = true
 }
 
+variable "do_dns_token" {
+    type = string
+    sensitive = true
+}
+
 variable "spaces_access_id" {
     type = string
     sensitive = true

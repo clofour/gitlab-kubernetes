@@ -1,3 +1,15 @@
+resource "helm_release" "external_dns" {
+    name = "external-dns"
+    namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
+    repository = "https://kubernetes-sigs.github.io/external-dns"
+    chart = "external-dns"
+    version = "1.20.0"
+
+    values = [
+        file("${path.module}/../helm/external-dns/values.yaml")
+    ]
+}
+
 resource "helm_release" "cert_manager" {
     name = "cert-manager"
     namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
@@ -53,8 +65,8 @@ resource "helm_release" "gitlab" {
             domain = var.domain_name
             gitlab_host = var.gitlab_host
             registry_host = var.registry_host
-            postgres_host = digitalocean_database_cluster.postgres.private_host
-            postgres_port = digitalocean_database_cluster.postgres.port
+            postgres_host = digitalocean_database_connection_pool.main.private_host
+            postgres_port = digitalocean_database_connection_pool.main.port
             postgres_database = digitalocean_database_db.gitlab.name
             postgres_username = digitalocean_database_cluster.postgres.user
             redis_host = digitalocean_database_cluster.valkey.private_host

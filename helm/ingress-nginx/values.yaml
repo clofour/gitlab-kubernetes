@@ -12,11 +12,10 @@ controller:
       service.beta.kubernetes.io/do-loadbalancer-name: "gitlab-lb"
       service.beta.kubernetes.io/do-loadbalancer-protocol: "tcp"
       service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
-      service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
     externalTrafficPolicy: Local
 
   config:
-    use-proxy-protocol: "true"
+    use-proxy-protocol: "false"
     ssl-redirect: "true"
     hsts: "true"
     hsts-max-age: "31536000"
