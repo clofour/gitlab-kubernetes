@@ -1,10 +1,10 @@
-resource "kubernetes_namespace_v1" "external_dns" {
-    metadata {
-      name = "external-dns"
-    }
+# resource "kubernetes_namespace_v1" "external_dns" {
+#     metadata {
+#       name = "external-dns"
+#     }
 
-    depends_on = [ digitalocean_kubernetes_cluster.main ]
-}
+#     depends_on = [ digitalocean_kubernetes_cluster.main ]
+# }
 
 resource "kubernetes_namespace_v1" "ingress_nginx" {
     metadata {
@@ -34,10 +34,10 @@ resource "random_password" "gitlab_root" {
     length = 64
 }
 
-resource "kubernetes_secret_v1" "external_dns_do_secret" {
+resource "kubernetes_secret_v1" "do_dns_secret" {
     metadata {
-        name = "external-dns-do-secret"
-        namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
+        name = "do-dns-secret"
+        namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
     }
 
     data = {

@@ -1,4 +1,5 @@
 name: letsencrypt
 server: https://acme-v02.api.letsencrypt.org/directory
 privateKeySecretName: letsencrypt-account-key
-ingressClass: nginx
+secretName: do-dns-secret
+secretKey: password

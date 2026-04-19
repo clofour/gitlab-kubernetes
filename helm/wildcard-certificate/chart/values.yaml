@@ -1,0 +1,4 @@
+name: wildcard-certificate
+namespace: default
+secretName: wildcard-certificate
+issuer: letsencrypt

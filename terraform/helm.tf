@@ -1,18 +1,26 @@
-resource "helm_release" "external_dns" {
-    name = "external-dns"
-    namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
-    repository = "https://kubernetes-sigs.github.io/external-dns"
-    chart = "external-dns"
-    version = "1.20.0"
+# resource "helm_release" "external_dns" {
+#     name = "external-dns"
+#     namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
+#     repository = "https://kubernetes-sigs.github.io/external-dns"
+#     chart = "external-dns"
+#     version = "1.20.0"
 
-    values = [
-        file("${path.module}/../helm/external-dns/values.yaml")
-    ]
+#     values = [
+#         file("${path.module}/../helm/external-dns/values.yaml")
+#     ]
 
-    depends_on = [
-        kubernetes_namespace_v1.external_dns, 
-        kubernetes_secret_v1.external_dns_do_secret 
-    ]
+#     depends_on = [
+#         kubernetes_namespace_v1.external_dns, 
+#         kubernetes_secret_v1.external_dns_do_secret 
+#     ]
+# }
+
+resource "helm_release" "reflector" {
+    name = "reflector"
+    namespace = "kube-system"
+    repository = "https://emberstack.github.io/helm-charts"
+    chart = "reflector"
+    version = "v10.0.35"
 }
 
 resource "helm_release" "cert_manager" {
@@ -36,6 +44,22 @@ resource "helm_release" "cluster_issuer" {
         templatefile("${path.module}/../helm/cluster-issuer/values.yaml", 
         {
             email = var.email
+        })
+    ]
+
+    depends_on = [helm_release.cert_manager]
+}
+
+resource "helm_release" "wildcard_certificate" {
+    name = "wildcard-certificate"
+    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
+    chart = "${path.module}/../helm/wildcard-certificate/chart"
+
+    values = [
+        templatefile("${path.module}/../helm/wildcard-certificate/values.yaml", 
+        {
+            domain = var.domain_name
+            reflectNamespaces = kubernetes_namespace_v1.gitlab.metadata[0].name
         })
     ]
 
@@ -90,7 +114,7 @@ resource "helm_release" "gitlab" {
         helm_release.cert_manager,
         helm_release.cluster_issuer,
         helm_release.ingress_nginx,
-        digitalocean_record.gitlab,
+        digitalocean_record.main,
         kubernetes_secret_v1.gitlab_initial_root_password,
         kubernetes_secret_v1.gitlab_postgres,
         kubernetes_secret_v1.gitlab_redis,
