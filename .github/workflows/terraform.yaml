@@ -8,9 +8,6 @@ jobs:
   validate:
     name: Validate
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./terraform
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -29,7 +26,11 @@ jobs:
     name: Deploy
     runs-on: ubuntu-24.04
     environment: production
-    if: github.ref == "refs/heads/main"
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+      TF_VAR_spaces_access_id: ${{ secrets.SPACES_ACCESS_ID }}
+      TF_VAR_spaces_secret_key: ${{ secrets.SPACES_SECRET_KEY }}
+    if: github.ref == 'refs/heads/main'
     needs: validate
     steps:
       - name: Checkout repository
@@ -41,7 +42,13 @@ jobs:
           terraform_version: "1.14.7"
 
       - name: Initialize Terraform project
-        run: terraform init -backend=false
+        run: terraform init
+
+      - name: Run Terraform Plan
+        run: terraform plan -out=tfplan
 
       - name: Run Terraform Apply
-        run: terraform apply
+        run: terraform apply tfplan -auto-approve
+defaults:
+  run:
+    working-directory: ./terraform
