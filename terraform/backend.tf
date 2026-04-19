@@ -7,6 +7,7 @@ terraform {
             s3 = "https://fra1.digitaloceanspaces.com"
         }
 
+        use_lockfile = true
         skip_credentials_validation = true
         skip_metadata_api_check = true
         skip_requesting_account_id = true
