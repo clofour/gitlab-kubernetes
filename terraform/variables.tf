@@ -3,6 +3,11 @@ variable "do_token" {
     sensitive = true
 }
 
+variable "do_dns_token" {
+    type = string
+    sensitive = true
+}
+
 variable "spaces_access_id" {
     type = string
     sensitive = true
@@ -16,7 +21,7 @@ variable "spaces_secret_key" {
 
 variable "region" {
     type = string
-    default = "fra1"
+    default = "ams3"
 }
 
 variable "cluster_name" {
@@ -31,7 +36,7 @@ variable "k8s_version" {
 
 variable "node_size" {
     type = string
-    default = "s-2vcpu-4gb"
+    default = "s-4vcpu-8gb"
 }
 
 variable "node_count" {

@@ -7,11 +7,11 @@ resource "digitalocean_domain" "main" {
 }
 
 resource "digitalocean_record" "gitlab" {
-    count = local.lb_ip != null ? 1 : 0
+    count = 1
 
     domain = digitalocean_domain.main.name
     type = "A"
     name = var.gitlab_host
-    value = locals.lb_ip
+    value = local.lb_ip
     ttl = 300
 }

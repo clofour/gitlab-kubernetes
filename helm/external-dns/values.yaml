@@ -1,0 +1,36 @@
+provider:
+  name: webhook
+  webhook:
+    image:
+      repository: ghcr.io/amoniacou/external-dns-digitalocean-webhook
+      tag: "v0.1.3"
+    env:
+      - name: DO_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-do-secret
+            key: password
+    args:
+      - --port=8080
+      - --log-level=info
+    securityContext:
+      runAsUser: 65532
+      runAsGroup: 65532
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: http-webhook
+      initialDelaySeconds: 10
+      periodSeconds: 10
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: http-webhook
+      initialDelaySeconds: 5
+      periodSeconds: 5

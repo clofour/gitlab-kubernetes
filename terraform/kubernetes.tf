@@ -1,3 +1,11 @@
+resource "kubernetes_namespace_v1" "external_dns" {
+    metadata {
+      name = "external-dns"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
 resource "kubernetes_namespace_v1" "ingress_nginx" {
     metadata {
       name = "ingress-nginx"
@@ -22,16 +30,21 @@ resource "kubernetes_namespace_v1" "gitlab" {
     depends_on = [ digitalocean_kubernetes_cluster.main ]
 }
 
-resource "kubernetes_manifest" "cluster_issuer" {
-    manifest = yamldecode(templatefile("${path.module}/../kubernetes/cluster-issuer.yaml", {
-        email = var.email
-    }))
-
-    depends_on = [ helm_release.cert_manager ]
-}
-
 resource "random_password" "gitlab_root" {
     length = 64
+}
+
+resource "kubernetes_secret_v1" "external_dns_do_secret" {
+    metadata {
+        name = "external-dns-do-secret"
+        namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
+    }
+
+    data = {
+        password = var.do_dns_token
+    }
+
+    type = "Opaque"
 }
 
 resource "kubernetes_secret_v1" "gitlab_initial_root_password" {
@@ -54,7 +67,7 @@ resource "kubernetes_secret_v1" "gitlab_postgres" {
     }
 
     data = {
-        password = digitalocean_database_user.gitlab.password
+        password = digitalocean_database_cluster.postgres.password
     }
 
     type = "Opaque"
@@ -93,24 +106,24 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
     type = "Opaque"
 }
 
-resource "kubernetes_secret_v1" "gitlab_s3_registry" {
-    metadata {
-        name = "gitlab-s3-registry-secret"
-        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
-    }
+# resource "kubernetes_secret_v1" "gitlab_s3_registry" {
+#     metadata {
+#         name = "gitlab-s3-registry-secret"
+#         namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+#     }
 
-    data = {
-        connection = yamlencode({
-           accesskey = var.spaces_access_id
-           secretkey = var.spaces_secret_key
-           region = var.region
-           regionendpoint = "https://${var.region}.digitaloceanspaces.com"
-           bucket = digitalocean_spaces_bucket.gitlab["registry"].name
-        })
-    }
+#     data = {
+#         connection = yamlencode({
+#            accesskey = var.spaces_access_id
+#            secretkey = var.spaces_secret_key
+#            region = var.region
+#            regionendpoint = "https://${var.region}.digitaloceanspaces.com"
+#            bucket = digitalocean_spaces_bucket.gitlab["registry"].name
+#         })
+#     }
 
-    type = "Opaque"
-}
+#     type = "Opaque"
+# }
 
 resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     metadata {
@@ -132,11 +145,16 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     type = "Opaque"
 }
 
+resource "time_sleep" "wait_for_lb" {
+    depends_on = [ helm_release.ingress_nginx ]
+    create_duration = "120s"
+}
+
 data "kubernetes_service_v1" "ingress_nginx" {
     metadata {
         name = "ingress-nginx-controller"
         namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
     }
 
-    depends_on = [helm_release.ingress_nginx]
+    depends_on = [ time_sleep.wait_for_lb ]
 }

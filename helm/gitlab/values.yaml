@@ -59,9 +59,12 @@ global:
     lfs:
       bucket: ${buckets["lfs"]}
       connection: {}
-    backups:
-      bucket: ${buckets["backups"]}
-      tmpBucket: ${buckets["tmp"]}
+    registry:
+      bucket: ${buckets["registry"]}
+      connection: {}
+
+  minio:
+    enabled: false
 
   time_zone: UTC
 
@@ -73,11 +76,10 @@ postgresql:
   install: false
 redis:
   install: false
-minio:
+gitlab-runner:
   install: false
 prometheus:
   install: false
 nginx-ingress:
   enabled: false
-certmanager:
-  install: false
+installCertmanager: false
