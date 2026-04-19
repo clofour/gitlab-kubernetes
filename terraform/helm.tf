@@ -8,6 +8,11 @@ resource "helm_release" "external_dns" {
     values = [
         file("${path.module}/../helm/external-dns/values.yaml")
     ]
+
+    depends_on = [
+        kubernetes_namespace_v1.external_dns.metadata[0].name, 
+        kubernetes_secret_v1.external_dns_do_secret 
+    ]
 }
 
 resource "helm_release" "cert_manager" {
@@ -77,8 +82,10 @@ resource "helm_release" "gitlab" {
 
     depends_on = [
         digitalocean_database_cluster.postgres,
+        digitalocean_database_postgresql_config.postgres,
         digitalocean_database_db.gitlab,
         digitalocean_database_user.gitlab,
+        digitalocean_database_connection_pool.main,
         digitalocean_database_cluster.valkey,
         helm_release.cert_manager,
         helm_release.cluster_issuer,

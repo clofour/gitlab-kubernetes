@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     server: {{ .Values.server }}
-    email: {{ .Values.email }}
+    email: {{ required "A valid .Values.email is required" .Values.email }}
     privateKeySecretRef:
       name: {{ .Values.privateKeySecretName }}
     solvers:

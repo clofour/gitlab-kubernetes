@@ -1,7 +1,7 @@
 locals {
     buckets = toset([
         "artifacts", "lfs", "uploads", "packages",
-        # "registry", "backups", "tmp", # "ci-secure-files",
+        "registry" #, "backups", "tmp", # "ci-secure-files",
         # "dependency-proxy", # "terraform-state", "pages"
     ])
 }

@@ -59,6 +59,9 @@ global:
     lfs:
       bucket: ${buckets["lfs"]}
       connection: {}
+    registry:
+      bucket: ${buckets["registry"]}
+      connection: {}
 
   minio:
     enabled: false
