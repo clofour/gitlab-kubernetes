@@ -10,7 +10,7 @@ resource "helm_release" "external_dns" {
     ]
 
     depends_on = [
-        kubernetes_namespace_v1.external_dns.metadata[0].name, 
+        kubernetes_namespace_v1.external_dns, 
         kubernetes_secret_v1.external_dns_do_secret 
     ]
 }
