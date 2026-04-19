@@ -1,0 +1,57 @@
+name: terraform
+on:
+  push:
+    branches:
+      - main
+      - dev
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85
+        with:
+          terraform_version: "1.14.7"
+
+      - name: Initialize Terraform project
+        run: terraform init -backend=false
+
+      - name: Run Terraform Validate
+        run: terraform validate
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-24.04
+    environment: production
+    env:
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+      TF_VAR_do_dns_token: ${{ secrets.DO_DNS_TOKEN }}
+      TF_VAR_spaces_access_id: ${{ secrets.SPACES_ACCESS_ID }}
+      TF_VAR_spaces_secret_key: ${{ secrets.SPACES_SECRET_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_KEY }}
+    if: github.ref == 'refs/heads/main'
+    needs: validate
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85
+        with:
+          terraform_version: "1.14.7"
+
+      - name: Initialize Terraform project
+        run: terraform init
+
+      - name: Run Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Run Terraform Apply
+        run: terraform apply tfplan -auto-approve
+defaults:
+  run:
+    working-directory: ./terraform
