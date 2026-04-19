@@ -1,2 +1,2 @@
 domain: ${domain}
-reflectNamespaces: ${reflectNamespaces}
+reflectNamespaces: "${reflectNamespaces}"

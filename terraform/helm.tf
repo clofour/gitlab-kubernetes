@@ -20,7 +20,7 @@ resource "helm_release" "reflector" {
     namespace = "kube-system"
     repository = "https://emberstack.github.io/helm-charts"
     chart = "reflector"
-    version = "v10.0.35"
+    version = "10.0.35"
 }
 
 resource "helm_release" "cert_manager" {
@@ -63,7 +63,7 @@ resource "helm_release" "wildcard_certificate" {
         })
     ]
 
-    depends_on = [helm_release.cert_manager]
+    depends_on = [helm_release.cert_manager, helm_release.cluster_issuer, helm_release.reflector]
 }
 
 resource "helm_release" "ingress_nginx" {
@@ -112,6 +112,8 @@ resource "helm_release" "gitlab" {
         digitalocean_database_connection_pool.main,
         digitalocean_database_cluster.valkey,
         helm_release.cert_manager,
+        helm_release.wildcard_certificate,
+        helm_release.reflector,
         helm_release.cluster_issuer,
         helm_release.ingress_nginx,
         digitalocean_record.main,
