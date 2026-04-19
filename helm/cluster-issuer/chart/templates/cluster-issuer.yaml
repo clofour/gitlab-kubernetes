@@ -9,6 +9,8 @@ spec:
     privateKeySecretRef:
       name: {{ .Values.privateKeySecretName }}
     solvers:
-      - http01:
-          ingress:
-            ingressClassName: {{ .Values.ingressClass }}
+      - dns01:
+          digitalocean:
+            tokenSecretRef:
+              name: {{ .Values.secretName }}
+              key: {{ .Values.secretKey }}

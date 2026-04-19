@@ -18,8 +18,7 @@ global:
     class: nginx
     tls:
       enabled: true
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt
+      secretName: "wildcard-certificate"
 
   psql:
     host: ${postgres_host}

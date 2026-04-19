@@ -1,0 +1,3 @@
+name: wildcard-certificate
+secretName: wildcard-certificate
+issuer: letsencrypt
