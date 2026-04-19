@@ -30,6 +30,14 @@ resource "kubernetes_namespace_v1" "gitlab" {
     depends_on = [ digitalocean_kubernetes_cluster.main ]
 }
 
+resource "kubernetes_namespace_v1" "monitoring" {
+    metadata {
+      name = "monitoring"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
 resource "random_password" "gitlab_root" {
     length = 64
 }
