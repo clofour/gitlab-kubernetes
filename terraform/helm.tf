@@ -135,7 +135,7 @@ resource "helm_release" "kube_prometheus_stack" {
         templatefile("${path.module}/../helm/kube-prometheus-stack/values.yaml",
         {
             grafana_host = var.grafana_host
-            domain = domain
+            domain = var.domain_name
         })
     ]
 }
