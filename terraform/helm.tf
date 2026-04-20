@@ -59,7 +59,7 @@ resource "helm_release" "wildcard_certificate" {
         templatefile("${path.module}/../helm/wildcard-certificate/values.yaml", 
         {
             domain = var.domain_name
-            reflectNamespaces = kubernetes_namespace_v1.gitlab.metadata[0].name
+            reflectNamespaces = "${kubernetes_namespace_v1.gitlab.metadata[0].name},${kubernetes_namespace_v1.monitoring.metadata[0].name}"
         })
     ]
 
