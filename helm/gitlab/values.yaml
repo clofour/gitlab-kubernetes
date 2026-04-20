@@ -20,33 +20,6 @@ global:
       enabled: true
       secretName: "wildcard-certificate"
 
-  gitlab:
-    webservice:
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      workhorse:
-        metrics:
-          enabled: true
-          serviceMonitor:
-            enabled: true
-    sidekiq:
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-    gitlab-exporter:
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-    gitlab-shell:
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-
   psql:
     host: ${postgres_host}
     port: ${postgres_port}
@@ -102,6 +75,33 @@ postgresql:
   install: false
 redis:
   install: false
+gitlab:
+  webservice:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    workhorse:
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+  sidekiq:
+    metrics:
+      enabled: true
+      podMonitor:
+        enabled: true
+  gitlab-exporter:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  gitlab-shell:
+    sshDaemon: gitlab-sshd
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
 gitlab-runner:
   install: false
 registry:

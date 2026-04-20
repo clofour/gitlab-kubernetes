@@ -125,13 +125,13 @@ resource "helm_release" "gitlab" {
 }
 
 resource "helm_release" "kube_prometheus_stack" {
-    name = "kube_prometheus_stack"
+    name = "kube-prometheus-stack"
     namespace = kubernetes_namespace_v1.monitoring.metadata[0].name
     repository = "https://prometheus-community.github.io/helm-charts"
     chart = "kube-prometheus-stack"
     version = "83.6.0"
 
     values = [
-        file("${path.module}/../helm/ingress-nginx/values.yaml")
+        file("${path.module}/../helm/kube-prometheus-stack/values.yaml")
     ]
 }
