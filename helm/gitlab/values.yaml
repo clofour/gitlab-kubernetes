@@ -77,6 +77,8 @@ redis:
   install: false
 gitlab:
   webservice:
+    minReplicas: 2 # TODO: Remove
+    maxReplicas: 2
     metrics:
       enabled: true
       serviceMonitor:
