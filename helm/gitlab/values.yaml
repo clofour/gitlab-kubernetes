@@ -75,8 +75,40 @@ postgresql:
   install: false
 redis:
   install: false
+gitlab:
+  webservice:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    workhorse:
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+  sidekiq:
+    metrics:
+      enabled: true
+      podMonitor:
+        enabled: true
+  gitlab-exporter:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  gitlab-shell:
+    sshDaemon: gitlab-sshd
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
 gitlab-runner:
   install: false
+registry:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
 prometheus:
   install: false
 nginx-ingress:
