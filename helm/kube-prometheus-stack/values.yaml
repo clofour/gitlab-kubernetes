@@ -1,3 +1,13 @@
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - ${grafana_host}.${domain}
+    tls:
+      - secretName: wildcard-certificate
+        hosts:
+          - ${grafana_host}.${domain}
+
 prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
