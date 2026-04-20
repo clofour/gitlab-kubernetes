@@ -132,6 +132,10 @@ resource "helm_release" "kube_prometheus_stack" {
     version = "83.6.0"
 
     values = [
-        file("${path.module}/../helm/kube-prometheus-stack/values.yaml")
+        templatefile("${path.module}/../helm/kube-prometheus-stack/values.yaml",
+        {
+            grafana_host = var.grafana_host
+            domain = domain
+        })
     ]
 }

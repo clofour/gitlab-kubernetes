@@ -1,3 +1,9 @@
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - ${grafana_host}.${domain}
+
 prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
