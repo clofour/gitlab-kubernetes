@@ -14,6 +14,7 @@ global:
       name: ${registry_host}.${domain}
     pages:
       name: ${pages_host}.${domain}
+      https: false
 
   ingress:
     configureCertmanager: false
@@ -40,6 +41,9 @@ global:
       secret: gitlab-redis-secret
       key: password
 
+  pages:
+    enabled: true
+
   appConfig:
     object_store:
       enabled: true
@@ -62,6 +66,9 @@ global:
       connection: {}
     registry:
       bucket: ${buckets["registry"]}
+      connection: {}
+    pages:
+      bucket: ${buckets["pages"]}
       connection: {}
 
   minio:
