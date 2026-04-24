@@ -18,6 +18,11 @@ variable "spaces_secret_key" {
     sensitive = true
 }
 
+variable "sendgrid_api_key" {
+    type = string
+    sensitive = true
+}
+
 
 variable "region" {
     type = string

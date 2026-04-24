@@ -153,6 +153,19 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     type = "Opaque"
 }
 
+resource "kubernetes_secret_v1" "gitlab_sendgrid_secret" {
+    metadata {
+        name = "gitlab-sendgrid-secret"
+        namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
+    }
+
+    data = {
+        password = var.sendgrid_api_key
+    }
+
+    type = "Opaque"
+}
+
 resource "time_sleep" "wait_for_lb" {
     depends_on = [ helm_release.ingress_nginx ]
     create_duration = "120s"
