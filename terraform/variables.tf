@@ -41,7 +41,7 @@ variable "node_size" {
 
 variable "node_count" {
     type = number
-    default = 2
+    default = 3
 }
 
 variable "email" {
@@ -64,6 +64,11 @@ variable "gitlab_host" {
 variable "registry_host" {
     type = string
     default = "registry"
+}
+
+variable "pages_host" {
+    type = string
+    default = "pages"
 }
 
 variable "grafana_host" {
