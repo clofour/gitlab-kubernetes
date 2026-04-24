@@ -6,3 +6,6 @@ replicaCount: 1
 
 prometheus:
   enabled: true
+
+webhook:
+  timeoutSeconds: 25
