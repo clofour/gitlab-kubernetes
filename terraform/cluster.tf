@@ -5,7 +5,7 @@ data "digitalocean_kubernetes_versions" "current" {
 resource "digitalocean_kubernetes_cluster" "main" {
     name = var.cluster_name
     region = var.region
-    version = data.digitalocean_kubernetes_versions.current.latest_version
+    version = "1.35.1-do.2" # TODO: Unpin version
     vpc_uuid = digitalocean_vpc.main.id
 
     auto_upgrade = false
