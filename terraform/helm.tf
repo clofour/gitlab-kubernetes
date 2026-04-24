@@ -94,6 +94,7 @@ resource "helm_release" "gitlab" {
             domain = var.domain_name
             gitlab_host = var.gitlab_host
             registry_host = var.registry_host
+            pages_host = var.pages_host
             postgres_host = digitalocean_database_connection_pool.main.private_host
             postgres_port = digitalocean_database_connection_pool.main.port
             postgres_database = digitalocean_database_db.gitlab.name

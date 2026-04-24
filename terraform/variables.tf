@@ -66,6 +66,11 @@ variable "registry_host" {
     default = "registry"
 }
 
+variable "pages_host" {
+    type = string
+    default = "pages"
+}
+
 variable "grafana_host" {
     type = string
     default = "grafana"
