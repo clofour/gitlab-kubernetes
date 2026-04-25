@@ -175,7 +175,7 @@ resource "kubernetes_secret_v1" "gitlab_sendgrid_secret" {
 }
 
 resource "time_sleep" "wait_for_gateway" {
-    depends_on = [ helm_release.envoy_gateway ]
+    depends_on = [ helm_release.envoy_gateway, helm_release.gateway_config ]
     create_duration = "120s"
 }
 
