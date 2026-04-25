@@ -6,6 +6,10 @@ terraform {
         source = "digitalocean/digitalocean"
         version = "~> 2.81.0"
       }
+      cloudflare = {
+        source = "cloudflare/cloudflare"
+        version = "~> 5.19.0"
+      }
       kubernetes = {
         source = "hashicorp/kubernetes"
         version = "~> 3.0.1"

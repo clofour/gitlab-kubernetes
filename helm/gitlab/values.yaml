@@ -74,6 +74,24 @@ global:
   minio:
     enabled: false
 
+  email:
+    display_name: GitLab
+    from: gitlab@${domain}
+    reply_to: noreply@${domain}
+
+  smtp:
+    enabled: true
+    domain: smtp.sendgrid.net
+    address: smtp.sendgrid.net
+    port: 587
+    user_name: apikey
+    password:
+      secret: gitlab-sendgrid-secret
+      key: password
+    tls: false
+    starttls_auto: true
+    openssl_verify_mode: peer
+
   time_zone: UTC
 
   extraEnv:

@@ -101,7 +101,7 @@ resource "helm_release" "gitlab" {
             postgres_username = digitalocean_database_cluster.postgres.user
             redis_host = digitalocean_database_cluster.valkey.private_host
             redis_port = digitalocean_database_cluster.valkey.port
-            buckets = {for key, bucket in digitalocean_spaces_bucket.gitlab : key => bucket.name}
+            buckets = {for key, bucket in cloudflare_r2_bucket.gitlab : key => bucket.name}
         })
     ]
 
@@ -121,7 +121,8 @@ resource "helm_release" "gitlab" {
         kubernetes_secret_v1.gitlab_initial_root_password,
         kubernetes_secret_v1.gitlab_postgres,
         kubernetes_secret_v1.gitlab_redis,
-        kubernetes_secret_v1.gitlab_s3_main
+        kubernetes_secret_v1.gitlab_s3_main,
+        kubernetes_secret_v1.gitlab_sendgrid_secret
     ]
 }
 
