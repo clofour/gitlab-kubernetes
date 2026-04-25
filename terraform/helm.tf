@@ -121,7 +121,8 @@ resource "helm_release" "gitlab" {
         kubernetes_secret_v1.gitlab_initial_root_password,
         kubernetes_secret_v1.gitlab_postgres,
         kubernetes_secret_v1.gitlab_redis,
-        kubernetes_secret_v1.gitlab_s3_main
+        kubernetes_secret_v1.gitlab_s3_main,
+        kubernetes_secret_v1.gitlab_sendgrid_secret
     ]
 }
 

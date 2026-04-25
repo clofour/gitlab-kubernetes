@@ -41,10 +41,6 @@ output "valkey_password" {
 }
 
 
-output "spaces_endpoint" {
-    value = "${var.region}.digitaloceanspaces.com"
-}
-
-output "spaces_buckets" {
+output "r2_buckets" {
     value = { for k, b in cloudflare_r2_bucket.gitlab : k => b.name }
 }

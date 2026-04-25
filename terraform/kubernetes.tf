@@ -104,7 +104,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
         connection = yamlencode({
             provider = "AWS"
             region = var.region
-            endpoint = "https://${var.region}.digitaloceanspaces.com"
+            endpoint = var.cloudflare_r2_endpoint
             aws_access_key_id = var.cloudflare_account_id
             aws_secret_access_key = var.cloudflare_api_token
             path_style = true
@@ -125,7 +125,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
 #            accesskey = var.spaces_access_id
 #            secretkey = var.spaces_secret_key
 #            region = var.region
-#            regionendpoint = "https://${var.region}.digitaloceanspaces.com"
+#            regionendpoint = ${{ secrets.R2_ACCESS_KEY_ID }}
 #            bucket = digitalocean_spaces_bucket.gitlab["registry"].name
 #         })
 #     }
@@ -143,7 +143,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
         connection = yamlencode({
             provider = "AWS"
             region = var.region
-            endpoint = "https://${var.region}.digitaloceanspaces.com"
+            endpoint = var.cloudflare_r2_endpoint
             aws_access_key_id = var.cloudflare_account_id
             aws_secret_access_key = var.cloudflare_api_token
             path_style = true
