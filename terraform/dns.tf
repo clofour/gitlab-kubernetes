@@ -17,4 +17,6 @@ resource "digitalocean_record" "main" {
     name = each.key
     value = local.lb_ip
     ttl = 300
+
+    depends_on = [ time_sleep.wait_for_lb ]
 }
