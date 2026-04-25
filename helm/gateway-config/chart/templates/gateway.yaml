@@ -5,6 +5,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   gatewayClassName: envoy
+  infrastructure:
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: proxy-config
   listeners:
     - name: http
       protocol: HTTP

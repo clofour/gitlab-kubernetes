@@ -1,0 +1,10 @@
+apiVersion: gateway.envoyproxy.k8s.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: proxy-config
+spec:
+  provider:
+    kubernetes:
+      envoyService:
+        metadata:
+          name: gateway

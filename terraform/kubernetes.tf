@@ -181,10 +181,8 @@ resource "time_sleep" "wait_for_lb" {
 
 data "kubernetes_service_v1" "envoy_gateway" {
     metadata {
+        name = "gateway"
         namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
-        labels = {
-            "gateway.networking.k8s.io/gateway-name" = "gateway"
-        }
     }
 
     depends_on = [ time_sleep.wait_for_lb ]
