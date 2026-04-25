@@ -8,12 +8,12 @@ variable "do_dns_token" {
     sensitive = true
 }
 
-variable "spaces_access_id" {
+variable "cloudflare_account_id" {
     type = string
     sensitive = true
 }
 
-variable "spaces_secret_key" {
+variable "cloudflare_api_token" {
     type = string
     sensitive = true
 }
@@ -27,6 +27,11 @@ variable "sendgrid_api_key" {
 variable "region" {
     type = string
     default = "ams3"
+}
+
+variable "r2_jurisdiction" {
+    type = string
+    default = "eu"
 }
 
 variable "cluster_name" {
