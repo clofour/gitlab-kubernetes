@@ -36,8 +36,8 @@ jobs:
       TF_VAR_cloudflare_r2_endpoint: ${{ secrets.R2_ENDPOINT }}
       TF_VAR_cloudflare_r2_access_key_id: ${{ secrets.R2_ACCESS_KEY_ID }}
       TF_VAR_cloudflare_r2_secret_access_key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_KEY }}
       TF_VAR_sendgrid_api_key: ${{ secrets.SENDGRID_API_KEY }}
     if: github.ref == 'refs/heads/main'
     needs: validate
