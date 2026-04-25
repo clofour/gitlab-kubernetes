@@ -83,7 +83,7 @@ resource "helm_release" "envoy_gateway" {
 resource "helm_release" "gateway_config" {
     name = "gateway-config"
     namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
-    repository = "oci://docker.io/envoyproxy/gateway-helm"
+    repository = "oci://docker.io/envoyproxy"
     chart = "gateway-helm"
     version = "1.7.2"
 }
