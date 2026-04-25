@@ -83,7 +83,7 @@ global:
     enabled: true
     domain: smtp.sendgrid.net
     address: smtp.sendgrid.net
-    port: 587
+    port: 2525
     user_name: apikey
     password:
       secret: gitlab-sendgrid-secret
