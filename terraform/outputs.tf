@@ -46,5 +46,5 @@ output "spaces_endpoint" {
 }
 
 output "spaces_buckets" {
-    value = { for k, b in digitalocean_spaces_bucket.gitlab : k => b.name }
+    value = { for k, b in cloudflare_r2_bucket.gitlab : k => b.name }
 }
