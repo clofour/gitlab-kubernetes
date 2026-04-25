@@ -7,7 +7,7 @@ grafana:
       hostnames:
         - ${grafana_host}.${domain}
       parentRefs:
-        - name: envoy-gateway
+        - name: gateway
           namespace: envoy-gateway-system
 
 prometheus:
