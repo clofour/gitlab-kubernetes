@@ -77,7 +77,7 @@ resource "helm_release" "envoy_gateway" {
 
     wait = true
 
-    depends_on = [ helm_release.cert_manager.envoy_gateway, helm_release.dns01_certificate ]
+    depends_on = [ helm_release.cert_manager, helm_release.dns01_certificate ]
 }
 
 resource "helm_release" "gateway_config" {
