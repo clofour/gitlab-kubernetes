@@ -33,6 +33,16 @@ variable "cloudflare_r2_secret_access_key" {
     sensitive = true
 }
 
+variable "spaces_access_id" {
+    type = string
+    sensitive = true
+}
+
+variable "spaces_secret_key" {
+    type = string
+    sensitive = true
+}
+
 variable "sendgrid_api_key" {
     type = string
     sensitive = true
