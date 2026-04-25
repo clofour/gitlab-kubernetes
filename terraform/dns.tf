@@ -18,5 +18,5 @@ resource "digitalocean_record" "main" {
     value = local.lb_ip
     ttl = 300
 
-    depends_on = [ time_sleep.wait_for_lb ]
+    depends_on = [ time_sleep.wait_for_gateway ]
 }
