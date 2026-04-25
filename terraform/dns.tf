@@ -1,5 +1,5 @@
 locals {
-    lb_ip = try(data.kubernetes_service_v1.ingress_nginx.status[0].load_balancer[0].ingress[0].ip, null)
+    lb_ip = try(data.kubernetes_service_v1.envoy_gateway.status[0].load_balancer[0].ingress[0].ip, null)
     records = toset([
         var.gitlab_host, var.registry_host, "*.${var.pages_host}", var.grafana_host
     ])

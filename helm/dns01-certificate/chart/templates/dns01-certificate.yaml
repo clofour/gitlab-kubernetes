@@ -10,8 +10,9 @@ spec:
     kind: ClusterIssuer
   commonName: {{ .Values.domain }}
   dnsNames:
-    - {{ .Values.domain }}
-    - "*.{{ .Values.domain }}"
+    {{- range .Values.dnsNameTemplates }}
+      - {{ tpl . $ | quote }}
+    {{- end }}
   secretTemplate:
     annotations:
     {{- if .Values.reflectNamespaces }}

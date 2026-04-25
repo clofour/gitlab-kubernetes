@@ -1,12 +1,14 @@
 grafana:
   ingress:
-    enabled: true
-    hosts:
-      - ${grafana_host}.${domain}
-    tls:
-      - secretName: wildcard-certificate
-        hosts:
-          - ${grafana_host}.${domain}
+    enabled: false
+  route:
+    main:
+      enabled: true
+      hostnames:
+        - ${grafana_host}.${domain}
+      parentRefs:
+        - name: gateway
+          namespace: envoy-gateway-system
 
 prometheus:
   prometheusSpec:

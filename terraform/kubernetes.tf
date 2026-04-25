@@ -6,17 +6,25 @@
 #     depends_on = [ digitalocean_kubernetes_cluster.main ]
 # }
 
-resource "kubernetes_namespace_v1" "ingress_nginx" {
+resource "kubernetes_namespace_v1" "cert_manager" {
     metadata {
-      name = "ingress-nginx"
+      name = "cert-manager"
     }
 
     depends_on = [ digitalocean_kubernetes_cluster.main ]
 }
 
-resource "kubernetes_namespace_v1" "cert_manager" {
+resource "kubernetes_namespace_v1" "envoy_gateway_system" {
     metadata {
-      name = "cert-manager"
+      name = "envoy-gateway-system"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "ingress_nginx" {
+    metadata {
+      name = "ingress-nginx"
     }
 
     depends_on = [ digitalocean_kubernetes_cluster.main ]
@@ -167,14 +175,14 @@ resource "kubernetes_secret_v1" "gitlab_sendgrid_secret" {
 }
 
 resource "time_sleep" "wait_for_lb" {
-    depends_on = [ helm_release.ingress_nginx ]
+    depends_on = [ helm_release.envoy_gateway ]
     create_duration = "120s"
 }
 
-data "kubernetes_service_v1" "ingress_nginx" {
+data "kubernetes_service_v1" "envoy_gateway" {
     metadata {
-        name = "ingress-nginx-controller"
-        namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
+        name = "envoy-gateway"
+        namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
     }
 
     depends_on = [ time_sleep.wait_for_lb ]

@@ -14,14 +14,18 @@ global:
       name: ${registry_host}.${domain}
     pages:
       name: ${pages_host}.${domain}
-      https: false
+
+  gatewayApi:
+    enabled: true
+    installEnvoy: false
+    configureCertmanager: false
+    gatewayClass: envoy
+    gateway:
+      name: gateway
+      namespace: envoy-gateway-system
 
   ingress:
-    configureCertmanager: false
-    class: nginx
-    tls:
-      enabled: true
-      secretName: "wildcard-certificate"
+    enabled: false
 
   psql:
     host: ${postgres_host}

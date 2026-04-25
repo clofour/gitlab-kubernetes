@@ -50,20 +50,42 @@ resource "helm_release" "cluster_issuer" {
     depends_on = [helm_release.cert_manager]
 }
 
-resource "helm_release" "wildcard_certificate" {
-    name = "wildcard-certificate"
-    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
-    chart = "${path.module}/../helm/wildcard-certificate/chart"
+resource "helm_release" "dns01_certificate" {
+    name = "dns01-certificate"
+    namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
+    chart = "${path.module}/../helm/dns01-certificate/chart"
 
     values = [
-        templatefile("${path.module}/../helm/wildcard-certificate/values.yaml", 
-        {
+        yamlencode({
             domain = var.domain_name
+            dnsNameTemplates = [
+                "{{ .Values.domain }}",
+                "*.{{ .Values.domain }}",
+                "*.pages.{{ .Values.domain }}"
+            ]
             reflectNamespaces = "${kubernetes_namespace_v1.gitlab.metadata[0].name},${kubernetes_namespace_v1.monitoring.metadata[0].name}"
         })
     ]
 
     depends_on = [helm_release.cert_manager, helm_release.cluster_issuer, helm_release.reflector]
+}
+
+resource "helm_release" "envoy_gateway" {
+    name = "eg"
+    namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
+    chart = "${path.module}/../helm/gateway-config/chart"
+
+    wait = true
+
+    depends_on = [ helm_release.cert_manager, helm_release.dns01_certificate ]
+}
+
+resource "helm_release" "gateway_config" {
+    name = "gateway-config"
+    namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
+    repository = "oci://docker.io/envoyproxy/gateway-helm"
+    chart = "gateway-helm"
+    version = "1.7.2"
 }
 
 resource "helm_release" "ingress_nginx" {
@@ -113,10 +135,12 @@ resource "helm_release" "gitlab" {
         digitalocean_database_connection_pool.main,
         digitalocean_database_cluster.valkey,
         helm_release.cert_manager,
-        helm_release.wildcard_certificate,
+        helm_release.dns01_certificate,
         helm_release.reflector,
         helm_release.cluster_issuer,
         helm_release.ingress_nginx,
+        helm_release.envoy_gateway,
+        helm_release.gateway_config,
         digitalocean_record.main,
         kubernetes_secret_v1.gitlab_initial_root_password,
         kubernetes_secret_v1.gitlab_postgres,
@@ -140,4 +164,6 @@ resource "helm_release" "kube_prometheus_stack" {
             domain = var.domain_name
         })
     ]
+
+    depends_on = [ helm_release.envoy_gateway ]
 }
