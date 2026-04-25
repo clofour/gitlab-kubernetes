@@ -86,6 +86,8 @@ resource "helm_release" "gateway_config" {
     repository = "oci://docker.io/envoyproxy"
     chart = "gateway-helm"
     version = "1.7.2"
+
+    depends_on = [ helm_release.envoy_gateway ]
 }
 
 resource "helm_release" "ingress_nginx" {
