@@ -140,6 +140,7 @@ resource "helm_release" "gitlab" {
         helm_release.cluster_issuer,
         helm_release.ingress_nginx,
         helm_release.envoy_gateway,
+        helm_release.gateway_config,
         digitalocean_record.main,
         kubernetes_secret_v1.gitlab_initial_root_password,
         kubernetes_secret_v1.gitlab_postgres,
