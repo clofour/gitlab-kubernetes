@@ -56,9 +56,13 @@ resource "helm_release" "wildcard_certificate" {
     chart = "${path.module}/../helm/wildcard-certificate/chart"
 
     values = [
-        templatefile("${path.module}/../helm/wildcard-certificate/values.yaml", 
-        {
+        yamlencode({
             domain = var.domain_name
+            dnsNameTemplates = [
+                "{{ .Values.domain }}",
+                "*.{{ .Values.domain }}",
+                "*.pages.{{ .Values.domain }}"
+            ]
             reflectNamespaces = "${kubernetes_namespace_v1.gitlab.metadata[0].name},${kubernetes_namespace_v1.monitoring.metadata[0].name}"
         })
     ]

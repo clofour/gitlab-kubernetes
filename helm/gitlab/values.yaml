@@ -14,7 +14,6 @@ global:
       name: ${registry_host}.${domain}
     pages:
       name: ${pages_host}.${domain}
-      https: false
 
   ingress:
     configureCertmanager: false
