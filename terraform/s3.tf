@@ -8,12 +8,6 @@ locals {
 
 resource "random_id" "suffix" {
     byte_length = 3
-    keepers = {
-        cluster_name = var.cluster_name
-    }
-    lifecycle {
-      prevent_destroy = true
-    }
 }
 
 resource "cloudflare_r2_bucket" "gitlab" {
@@ -21,4 +15,7 @@ resource "cloudflare_r2_bucket" "gitlab" {
     account_id = var.cloudflare_account_id
     name = "${var.cluster_name}-${each.key}-${random_id.suffix.hex}"
     jurisdiction = var.r2_jurisdiction
+    lifecycle {
+      prevent_destroy = true
+    }
 }
