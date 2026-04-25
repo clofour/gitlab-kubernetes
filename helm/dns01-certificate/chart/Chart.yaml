@@ -1,6 +1,6 @@
 apiVersion: v2
-name: wildcard-certificate
-description: Wildcard Certificate
+name: dns01-certificate
+description: DNS01 Certificate
 
 # A chart can be either an 'application' or a 'library' chart.
 #

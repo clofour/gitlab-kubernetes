@@ -50,10 +50,10 @@ resource "helm_release" "cluster_issuer" {
     depends_on = [helm_release.cert_manager]
 }
 
-resource "helm_release" "wildcard_certificate" {
-    name = "wildcard-certificate"
-    namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
-    chart = "${path.module}/../helm/wildcard-certificate/chart"
+resource "helm_release" "dns01_certificate" {
+    name = "dns01-certificate"
+    namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
+    chart = "${path.module}/../helm/dns01-certificate/chart"
 
     values = [
         yamlencode({
@@ -68,6 +68,14 @@ resource "helm_release" "wildcard_certificate" {
     ]
 
     depends_on = [helm_release.cert_manager, helm_release.cluster_issuer, helm_release.reflector]
+}
+
+resource "helm_release" "envoy_gateway" {
+    name = "eg"
+    namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
+    repository = "oci://docker.io/envoyproxy/gateway-helm"
+    chart = "gateway-helm"
+    version = "1.7.2"
 }
 
 resource "helm_release" "ingress_nginx" {

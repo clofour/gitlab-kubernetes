@@ -6,17 +6,25 @@
 #     depends_on = [ digitalocean_kubernetes_cluster.main ]
 # }
 
-resource "kubernetes_namespace_v1" "ingress_nginx" {
+resource "kubernetes_namespace_v1" "cert_manager" {
     metadata {
-      name = "ingress-nginx"
+      name = "cert-manager"
     }
 
     depends_on = [ digitalocean_kubernetes_cluster.main ]
 }
 
-resource "kubernetes_namespace_v1" "cert_manager" {
+resource "kubernetes_namespace_v1" "envoy_gateway_system" {
     metadata {
-      name = "cert-manager"
+      name = "envoy-gateway-system"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "ingress_nginx" {
+    metadata {
+      name = "ingress-nginx"
     }
 
     depends_on = [ digitalocean_kubernetes_cluster.main ]

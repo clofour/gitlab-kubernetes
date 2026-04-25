@@ -15,12 +15,17 @@ global:
     pages:
       name: ${pages_host}.${domain}
 
-  ingress:
+  gatewayApi:
+    enabled: true
+    installEnvoy: false
     configureCertmanager: false
-    class: nginx
-    tls:
-      enabled: true
-      secretName: "wildcard-certificate"
+    gatewayClass: envoy
+    gateway:
+      name: gateway
+      namespace: envoy-gateway-system
+
+  ingress:
+    enabled: false
 
   psql:
     host: ${postgres_host}
