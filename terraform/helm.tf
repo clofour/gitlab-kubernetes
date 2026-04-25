@@ -71,21 +71,22 @@ resource "helm_release" "dns01_certificate" {
 }
 
 resource "helm_release" "envoy_gateway" {
-    name = "eg"
+    name = "envoy-gateway"
     namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
-    chart = "${path.module}/../helm/gateway-config/chart"
+    repository = "oci://docker.io/envoyproxy"
+    chart = "gateway-helm"
+    version = "1.7.2"
 
     wait = true
 
     depends_on = [ helm_release.cert_manager, helm_release.dns01_certificate ]
+    
 }
 
 resource "helm_release" "gateway_config" {
     name = "gateway-config"
     namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
-    repository = "oci://docker.io/envoyproxy"
-    chart = "gateway-helm"
-    version = "1.7.2"
+    chart = "${path.module}/../helm/gateway-config/chart"
 
     depends_on = [ helm_release.envoy_gateway ]
 }
