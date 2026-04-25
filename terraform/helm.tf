@@ -125,7 +125,7 @@ resource "helm_release" "gitlab" {
         digitalocean_database_connection_pool.main,
         digitalocean_database_cluster.valkey,
         helm_release.cert_manager,
-        helm_release.wildcard_certificate,
+        helm_release.dns01_certificate,
         helm_release.reflector,
         helm_release.cluster_issuer,
         helm_release.ingress_nginx,
