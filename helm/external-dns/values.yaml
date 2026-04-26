@@ -6,3 +6,10 @@ env:
       secretKeyRef:
         name: do-dns-secret
         key: password
+domainFilters:
+  - ${domain}
+txtOwnerId: ${cluster_name}
+sources:
+  - service
+  - gateway-httproute
+policy: sync

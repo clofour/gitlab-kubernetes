@@ -1,3 +1,11 @@
+resource "helm_release" "reflector" {
+    name = "reflector"
+    namespace = "kube-system"
+    repository = "https://emberstack.github.io/helm-charts"
+    chart = "reflector"
+    version = "10.0.35"
+}
+
 resource "helm_release" "external_dns" {
     name = "external-dns"
     namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
@@ -6,21 +14,18 @@ resource "helm_release" "external_dns" {
     version = "1.20.0"
 
     values = [
-        file("${path.module}/../helm/external-dns/values.yaml")
+        templatefile("${path.module}/../helm/external-dns/values.yaml",
+        {
+            domain = var.domain_name,
+            cluster_name = var.cluster_name
+        })
     ]
 
     depends_on = [
         kubernetes_namespace_v1.external_dns, 
-        kubernetes_secret_v1.do_dns_secret 
+        kubernetes_secret_v1.do_dns_secret,
+        helm_release.reflector
     ]
-}
-
-resource "helm_release" "reflector" {
-    name = "reflector"
-    namespace = "kube-system"
-    repository = "https://emberstack.github.io/helm-charts"
-    chart = "reflector"
-    version = "10.0.35"
 }
 
 resource "helm_release" "cert_manager" {
