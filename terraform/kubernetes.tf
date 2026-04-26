@@ -54,6 +54,11 @@ resource "kubernetes_secret_v1" "do_dns_secret" {
     metadata {
         name = "do-dns-secret"
         namespace = kubernetes_namespace_v1.cert_manager.metadata[0].name
+        annotations = {
+            "reflector.v1.k8s.emberstack.com/reflection-allowed" = "true",
+            "reflector.v1.k8s.emberstack.com/reflection-auto-enabled" = "true",
+            "reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces"= kubernetes_namespace_v1.external_dns.metadata[0].name
+        }
     }
 
     data = {
