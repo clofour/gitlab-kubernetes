@@ -19,8 +19,7 @@ global:
     enabled: true
     installEnvoy: false
     configureCertmanager: false
-    gatewayClass: envoy
-    gateway:
+    gatewayRef:
       name: gateway
       namespace: envoy-gateway-system
 
