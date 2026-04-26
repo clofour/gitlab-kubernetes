@@ -91,18 +91,6 @@ resource "helm_release" "gateway_config" {
     depends_on = [ helm_release.envoy_gateway ]
 }
 
-resource "helm_release" "ingress_nginx" {
-    name = "ingress-nginx"
-    namespace = kubernetes_namespace_v1.ingress_nginx.metadata[0].name
-    repository = "https://kubernetes.github.io/ingress-nginx"
-    chart = "ingress-nginx"
-    version = "4.15.1"
-
-    values = [
-        file("${path.module}/../helm/ingress-nginx/values.yaml")
-    ]
-}
-
 resource "helm_release" "gitlab" {
     name = "gitlab"
     namespace = kubernetes_namespace_v1.gitlab.metadata[0].name
@@ -141,7 +129,6 @@ resource "helm_release" "gitlab" {
         helm_release.dns01_certificate,
         helm_release.reflector,
         helm_release.cluster_issuer,
-        helm_release.ingress_nginx,
         helm_release.envoy_gateway,
         helm_release.gateway_config,
         digitalocean_record.main,

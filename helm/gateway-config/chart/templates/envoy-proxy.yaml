@@ -10,3 +10,7 @@ spec:
       envoyService:
         metadata:
           name: gateway
+        annotations:
+          service.beta.kubernetes.io/do-loadbalancer-name: "gitlab-lb"
+          service.beta.kubernetes.io/do-loadbalancer-protocol: "tcp"
+          service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
