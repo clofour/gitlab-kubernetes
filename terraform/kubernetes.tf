@@ -174,7 +174,7 @@ resource "kubernetes_secret_v1" "gitlab_sendgrid_secret" {
     type = "Opaque"
 }
 
-resource "time_sleep" "wait_for_gateway_debug" {
+resource "time_sleep" "wait_for_gateway" {
     depends_on = [ helm_release.envoy_gateway, helm_release.gateway_config ]
     create_duration = "120s"
 }
@@ -185,5 +185,5 @@ data "kubernetes_service_v1" "envoy_gateway" {
         namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
     }
 
-    depends_on = [ time_sleep.wait_for_gateway_debug ]
+    depends_on = [ time_sleep.wait_for_gateway ]
 }
