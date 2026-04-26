@@ -8,8 +8,6 @@ spec:
     type: Kubernetes
     kubernetes:
       envoyService:
-        metadata:
-          name: gateway
         annotations:
           service.beta.kubernetes.io/do-loadbalancer-name: "gitlab-lb"
           service.beta.kubernetes.io/do-loadbalancer-protocol: "tcp"

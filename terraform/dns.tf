@@ -9,14 +9,14 @@ resource "digitalocean_domain" "main" {
     name = var.domain_name
 }
 
-resource "digitalocean_record" "main" {
-    for_each = local.records
+# resource "digitalocean_record" "main" {
+#     for_each = local.records
 
-    domain = digitalocean_domain.main.name
-    type = "A"
-    name = each.key
-    value = local.lb_ip
-    ttl = 300
+#     domain = digitalocean_domain.main.name
+#     type = "A"
+#     name = each.key
+#     value = local.lb_ip
+#     ttl = 300
 
-    depends_on = [ time_sleep.wait_for_gateway_debug ]
-}
+#     depends_on = [ time_sleep.wait_for_gateway_debug ]
+# }

@@ -1,19 +1,19 @@
-# resource "helm_release" "external_dns" {
-#     name = "external-dns"
-#     namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
-#     repository = "https://kubernetes-sigs.github.io/external-dns"
-#     chart = "external-dns"
-#     version = "1.20.0"
+resource "helm_release" "external_dns" {
+    name = "external-dns"
+    namespace = kubernetes_namespace_v1.external_dns.metadata[0].name
+    repository = "https://kubernetes-sigs.github.io/external-dns"
+    chart = "external-dns"
+    version = "1.20.0"
 
-#     values = [
-#         file("${path.module}/../helm/external-dns/values.yaml")
-#     ]
+    values = [
+        file("${path.module}/../helm/external-dns/values.yaml")
+    ]
 
-#     depends_on = [
-#         kubernetes_namespace_v1.external_dns, 
-#         kubernetes_secret_v1.external_dns_do_secret 
-#     ]
-# }
+    depends_on = [
+        kubernetes_namespace_v1.external_dns, 
+        kubernetes_secret_v1.do_dns_secret 
+    ]
+}
 
 resource "helm_release" "reflector" {
     name = "reflector"

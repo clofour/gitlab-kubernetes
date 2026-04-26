@@ -1,10 +1,10 @@
-# resource "kubernetes_namespace_v1" "external_dns" {
-#     metadata {
-#       name = "external-dns"
-#     }
+resource "kubernetes_namespace_v1" "external_dns" {
+    metadata {
+      name = "external-dns"
+    }
 
-#     depends_on = [ digitalocean_kubernetes_cluster.main ]
-# }
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
 
 resource "kubernetes_namespace_v1" "cert_manager" {
     metadata {
