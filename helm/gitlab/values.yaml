@@ -108,6 +108,8 @@ redis:
   install: false
 gitlab:
   webservice:
+    gatewayRoute:
+      sectionName: https
     metrics:
       enabled: true
       serviceMonitor:
