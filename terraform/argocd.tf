@@ -14,7 +14,10 @@ resource "helm_release" "argo_cd" {
     version = "9.5.9"
 
     values = [
-        file("${path.module}/../values.yaml")
+        templatefile("${path.module}/../helm/argo-cd/values.yaml",
+        {
+            domain = var.domain_name
+        })
     ]
 
     depends_on = [ digitalocean_kubernetes_cluster.main ]
