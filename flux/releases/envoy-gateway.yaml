@@ -8,12 +8,10 @@ spec:
   dependsOn:
     - name: cert-manager
     - name: dns01-certificate
-  chart:
-    spec:
-      chartRef:
-        kind: OCIRepository
-        name: envoy-proxy
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: envoy-proxy
+    namespace: flux-system
   targetNamespace: envoy-gateway-system
   install:
     createNamespace: true

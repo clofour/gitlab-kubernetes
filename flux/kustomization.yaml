@@ -10,7 +10,10 @@ resources:
   - repositories/gitlab.yaml
   - repositories/jetstack.yaml
   - releases/cert-manager.yaml
+  - releases/cluster-issuer.yaml
+  - releases/dns01-certificate.yaml
   - releases/envoy-gateway.yaml
   - releases/external-dns.yaml
+  - releases/gateway-config.yaml
   - releases/gitlab.yaml
   - releases/reflector.yaml

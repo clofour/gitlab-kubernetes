@@ -9,6 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: github
+  path: ./flux
   postBuild:
     substituteFrom:
       - kind: ConfigMap
