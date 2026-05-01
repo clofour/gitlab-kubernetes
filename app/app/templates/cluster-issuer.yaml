@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-issuer
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.repoURL }}
+    path: helm/cluster-issuer/chart
+    targetRevision: HEAD
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cluster-issuer
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
