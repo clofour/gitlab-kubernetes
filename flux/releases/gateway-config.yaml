@@ -4,19 +4,19 @@ metadata:
   name: gateway-config
   namespace: flux-system
 spec:
+  interval: 1m
+  dependsOn:
+    - name: envoy-gateway
   chart:
     spec:
-      interval: 1m
-      dependsOn:
-        - envoy-gateway
       chart: ./helm/gateway-config
       sourceRef:
         kind: GitRepository
         name: github
         namespace: flux-system
-      targetNamespace: envoy-gateway-system
-      install:
-        createNamespace: true
-      values:
-        name: gateway
-        certificateName: wildcard-certificate
+  targetNamespace: envoy-gateway-system
+  install:
+    createNamespace: true
+  values:
+    name: gateway
+    certificateName: wildcard-certificate

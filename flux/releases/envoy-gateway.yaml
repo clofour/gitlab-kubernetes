@@ -4,16 +4,16 @@ metadata:
   name: envoy-gateway
   namespace: flux-system
 spec:
+  interval: 1m
+  dependsOn:
+    - name: cert-manager
+    - name: dns01-certificate
   chart:
     spec:
-      interval: 1m
-      dependsOn:
-        - cert-manager
-        - dns01-certificate
       chartRef:
         kind: OCIRepository
         name: envoy-proxy
         namespace: flux-system
-      targetNamespace: envoy-gateway-system
-      install:
-        createNamespace: true
+  targetNamespace: envoy-gateway-system
+  install:
+    createNamespace: true

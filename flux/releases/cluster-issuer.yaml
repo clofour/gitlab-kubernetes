@@ -4,18 +4,18 @@ metadata:
   name: cluster-issuer
   namespace: flux-system
 spec:
+  interval: 1m
+  dependsOn:
+    - name: cert-manager
   chart:
     spec:
-      interval: 1m
-      dependsOn:
-        - cert-manager
       chart: ./helm/cluster-issuer
       sourceRef:
         kind: GitRepository
         name: github
         namespace: flux-system
-      targetNamespace: cert-manager
-      install:
-        createNamespace: true
-      values:
-        email: ${email}
+  targetNamespace: cert-manager
+  install:
+    createNamespace: true
+  values:
+    email: ${email}

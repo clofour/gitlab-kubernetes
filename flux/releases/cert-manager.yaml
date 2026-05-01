@@ -4,25 +4,25 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
+  interval: 1m
   chart:
     spec:
-      interval: 1m
       chartRef:
         kind: OCIRepository
         name: cert-manager
         namespace: flux-system
-      targetNamespace: cert-manager
-      install:
-        createNamespace: true
-      values:
-        crds:
-          enabled: true
-          keep: true
+  targetNamespace: cert-manager
+  install:
+    createNamespace: true
+  values:
+    crds:
+      enabled: true
+      keep: true
 
-        replicaCount: 1
+    replicaCount: 1
 
-        prometheus:
-          enabled: true
+    prometheus:
+      enabled: true
 
-        webhook:
-          timeoutSeconds: 25
+    webhook:
+      timeoutSeconds: 25

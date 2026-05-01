@@ -2,9 +2,9 @@ resource "flux_bootstrap_git" "flux_cd" {
     path = "flux"
 }
 
-resource "kubernetes_config_map_v1" "runtime_config" {
+resource "kubernetes_config_map_v1" "runtime_values" {
     metadata {
-        name = "runtime-config"
+        name = "runtime-values"
         namespace = "flux-system"
     }
 
@@ -22,6 +22,13 @@ resource "kubernetes_config_map_v1" "runtime_config" {
         postgres_username = digitalocean_database_cluster.postgres.user
         redis_host = digitalocean_database_cluster.valkey.private_host
         redis_port = digitalocean_database_cluster.valkey.port
-        buckets = {for key, bucket in cloudflare_r2_bucket.gitlab : key => bucket.name}
+        buckets_artifacts = cloudflare_r2_bucket.gitlab["artifacts"].name
+        buckets_uploads = cloudflare_r2_bucket.gitlab["uploads"].name
+        buckets_packages = cloudflare_r2_bucket.gitlab["packages"].name
+        buckets_lfs = cloudflare_r2_bucket.gitlab["lfs"].name
+        buckets_registry = cloudflare_r2_bucket.gitlab["registry"].name
+        buckets_pages = cloudflare_r2_bucket.gitlab["pages"].name
     }
+
+    depends_on = [ flux_bootstrap_git.flux_cd ]
 }

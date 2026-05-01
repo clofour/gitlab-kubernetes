@@ -4,4 +4,4 @@ metadata:
   name: emberstack
   namespace: flux-system
 spec:
-  url: https://emberstack.github.io/helm-chart
+  url: https://emberstack.github.io/helm-charts

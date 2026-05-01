@@ -1,9 +1,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: jetstack
+  name: cert-manager
   namespace: flux-system
 spec:
-  url: oci://quay.io/jetstack/charts
+  url: oci://quay.io/jetstack/charts/cert-manager
   ref:
     tag: 1.20.2
