@@ -1,3 +1,51 @@
+resource "kubernetes_namespace_v1" "external_dns" {
+    metadata {
+      name = "external-dns"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "cert_manager" {
+    metadata {
+      name = "cert-manager"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "envoy_gateway_system" {
+    metadata {
+      name = "envoy-gateway-system"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "ingress_nginx" {
+    metadata {
+      name = "ingress-nginx"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "gitlab" {
+    metadata {
+      name = "gitlab"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
+resource "kubernetes_namespace_v1" "monitoring" {
+    metadata {
+      name = "monitoring"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
 resource "random_password" "gitlab_root" {
     length = 64
 }
@@ -129,4 +177,18 @@ resource "kubernetes_secret_v1" "gitlab_sendgrid_secret" {
     }
 
     type = "Opaque"
+}
+
+resource "time_sleep" "wait_for_gateway_debug" {
+    depends_on = [ helm_release.envoy_gateway, helm_release.gateway_config ]
+    create_duration = "120s"
+}
+
+data "kubernetes_service_v1" "envoy_gateway" {
+    metadata {
+        name = "gateway"
+        namespace = kubernetes_namespace_v1.envoy_gateway_system.metadata[0].name
+    }
+
+    depends_on = [ time_sleep.wait_for_gateway_debug ]
 }
