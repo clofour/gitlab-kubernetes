@@ -14,3 +14,15 @@ spec:
       targetNamespace: cert-manager
       install:
         createNamespace: true
+      values:
+        crds:
+          enabled: true
+          keep: true
+
+        replicaCount: 1
+
+        prometheus:
+          enabled: true
+
+        webhook:
+          timeoutSeconds: 25

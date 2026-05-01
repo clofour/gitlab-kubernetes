@@ -7,6 +7,8 @@ spec:
   chart:
     spec:
       interval: 1m
+      dependsOn:
+        - reflector
       chart: external-dns
       version: 1.20.0
       sourceRef:
@@ -16,3 +18,19 @@ spec:
       targetNamespace: external-dns
       install:
         createNamespace: true
+      values:
+        provider:
+          name: digitalocean
+        env:
+          - name: DO_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: do-dns-secret
+                key: password
+        domainFilters:
+          - ${domain}
+        txtOwnerId: ${cluster_name}
+        sources:
+          - service
+          - gateway-httproute
+        policy: sync
