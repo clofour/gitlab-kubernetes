@@ -13,7 +13,7 @@ spec:
       chart: ./helm/dns01-certificate
       sourceRef:
         kind: GitRepository
-        name: github
+        name: flux-system
         namespace: flux-system
   targetNamespace: cert-manager
   install:

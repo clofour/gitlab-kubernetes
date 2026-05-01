@@ -6,7 +6,6 @@ resources:
   - repositories/emberstack.yaml
   - repositories/envoy-proxy.yaml
   - repositories/external-dns.yaml
-  - repositories/github.yaml
   - repositories/gitlab.yaml
   - repositories/jetstack.yaml
   - releases/cert-manager.yaml

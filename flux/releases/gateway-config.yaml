@@ -12,7 +12,7 @@ spec:
       chart: ./helm/gateway-config
       sourceRef:
         kind: GitRepository
-        name: github
+        name: flux-system
         namespace: flux-system
   targetNamespace: envoy-gateway-system
   install:

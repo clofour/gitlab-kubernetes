@@ -41,6 +41,7 @@ jobs:
       TF_VAR_spaces_access_id: ${{ secrets.SPACES_ACCESS_ID }}
       TF_VAR_spaces_secret_key: ${{ secrets.SPACES_SECRET_KEY }}
       TF_VAR_sendgrid_api_key: ${{ secrets.SENDGRID_API_KEY }}
+      TF_VAR_git_repo: ${{ github.server_url }}/${{ github.repository }}
     if: github.ref == 'refs/heads/main'
     needs: validate
     steps:
