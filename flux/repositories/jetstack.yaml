@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: jetstack
+  namespace: flux-system
+spec:
+  url: oci://quay.io/jetstack/charts
+  ref:
+    tag: 1.20.2

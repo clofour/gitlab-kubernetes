@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      interval: 1m
+      chartRef:
+        kind: OCIRepository
+        name: cert-manager
+        namespace: flux-system
+      targetNamespace: cert-manager
+      install:
+        createNamespace: true
