@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shared-values
+  namespace: flux-system
+data:
+  key: value

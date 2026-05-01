@@ -14,17 +14,13 @@ terraform {
         source = "hashicorp/kubernetes"
         version = "~> 3.0.1"
       }
-      helm = {
-        source = "hashicorp/helm"
-        version = "~> 3.1.1"
+      flux = {
+        source = "fluxcd/flux"
+        version = "~> 1.8.6"
       }
       random = {
         source = "hashicorp/random"
         version = "~> 3.8.1"
-      }
-      time = {
-        source = "hashicorp/time"
-        version = "~> 0.13.1"
       }
     }
 }

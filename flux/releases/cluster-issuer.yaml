@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cluster-issuer
+  namespace: flux-system
+spec:
+  interval: 1m
+  dependsOn:
+    - name: cert-manager
+  chart:
+    spec:
+      chart: ./helm/cluster-issuer
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  targetNamespace: cert-manager
+  install:
+    createNamespace: true
+  values:
+    email: ${email}

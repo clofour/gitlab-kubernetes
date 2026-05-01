@@ -49,6 +49,11 @@ variable "sendgrid_api_key" {
 }
 
 
+variable "git_repo" {
+    type = string
+}
+
+
 variable "region" {
     type = string
     default = "ams3"
