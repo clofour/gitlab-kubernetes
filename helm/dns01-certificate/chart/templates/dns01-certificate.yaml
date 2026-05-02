@@ -13,10 +13,3 @@ spec:
     {{- range .Values.dnsNameTemplates }}
       - {{ tpl . $ | quote }}
     {{- end }}
-  secretTemplate:
-    annotations:
-    {{- if .Values.reflectNamespaces }}
-      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
-      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "{{ .Values.reflectNamespaces }}"
-    {{- end}}
