@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - repositories/cert-manager.yaml
+  - repositories/emberstack.yaml
+  - repositories/envoy-proxy.yaml
+  - repositories/external-dns.yaml
+  - repositories/gitlab.yaml
+  - releases/cert-manager.yaml
+  - releases/cluster-issuer.yaml
+  - releases/dns01-certificate.yaml
+  - releases/envoy-gateway.yaml
+  - releases/external-dns.yaml
+  - releases/gateway-config.yaml
+  - releases/gitlab.yaml
+  - releases/reflector.yaml
