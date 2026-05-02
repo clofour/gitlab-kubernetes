@@ -9,7 +9,7 @@ spec:
     - name: envoy-gateway
   chart:
     spec:
-      chart: ./helm/gateway-config
+      chart: ./helm/gateway-config/chart
       sourceRef:
         kind: GitRepository
         name: flux-system

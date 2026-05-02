@@ -9,7 +9,7 @@ spec:
     - name: cert-manager
   chart:
     spec:
-      chart: ./helm/cluster-issuer
+      chart: ./helm/cluster-issuer/chart
       sourceRef:
         kind: GitRepository
         name: flux-system

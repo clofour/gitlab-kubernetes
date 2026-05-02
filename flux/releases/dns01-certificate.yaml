@@ -10,7 +10,7 @@ spec:
     - name: cluster-issuer
   chart:
     spec:
-      chart: ./helm/dns01-certificate
+      chart: ./helm/dns01-certificate/chart
       sourceRef:
         kind: GitRepository
         name: flux-system
