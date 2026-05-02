@@ -1,4 +1,4 @@
-name: terraform-unlock
+name: terraform-staterm
 on:
   workflow_dispatch:
     inputs:
