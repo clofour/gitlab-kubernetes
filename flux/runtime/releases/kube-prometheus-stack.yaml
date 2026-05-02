@@ -6,6 +6,7 @@ metadata:
 spec:
   interval: 1m
   dependsOn:
+    - name: envoy-gateway
     - name: gitlab
   chart:
     spec:
