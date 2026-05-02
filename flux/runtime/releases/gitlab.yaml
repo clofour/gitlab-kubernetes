@@ -103,8 +103,10 @@ spec:
           connection: {}
         externalDiffs:
           enabled: false
+          bucket: ${buckets_external_diffs}
         dependencyProxy:
           enabled: false
+          bucket: ${buckets_dependency_proxy}
         ciSecureFiles:
           bucket: ${buckets_ci_secure_files}
           connection: {}
