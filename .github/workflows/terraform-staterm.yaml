@@ -7,8 +7,8 @@ on:
         required: true
         type: string
 jobs:
-  destroy:
-    name: Destroy
+  staterm:
+    name: Remove State
     runs-on: ubuntu-24.04
     environment: production
     env:
@@ -41,7 +41,7 @@ jobs:
         run: terraform init
 
       - name: Run Terraform Remove State
-        run: terraform state rm ${{ inputs.objevt }}
+        run: terraform state rm ${{ inputs.object }}
 
 defaults:
   run:
