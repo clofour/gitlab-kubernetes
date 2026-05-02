@@ -126,8 +126,8 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
             provider = "AWS"
             region = var.region
             endpoint = var.cloudflare_r2_endpoint
-            aws_access_key_id = var.cloudflare_account_id
-            aws_secret_access_key = var.cloudflare_api_token
+            aws_access_key_id = var.cloudflare_r2_access_key_id
+            aws_secret_access_key = var.cloudflare_r2_secret_access_key
             path_style = true
         })
     }
@@ -165,8 +165,8 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
             provider = "AWS"
             region = var.region
             endpoint = var.cloudflare_r2_endpoint
-            aws_access_key_id = var.cloudflare_account_id
-            aws_secret_access_key = var.cloudflare_api_token
+            aws_access_key_id = var.cloudflare_r2_access_key_id
+            aws_secret_access_key = var.cloudflare_r2_secret_access_key
             path_style = true
         })
     }

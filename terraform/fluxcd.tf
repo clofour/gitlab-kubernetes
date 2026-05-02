@@ -9,6 +9,7 @@ resource "kubernetes_config_map_v1" "runtime_values" {
         gitlab_host = var.gitlab_host
         registry_host = var.registry_host
         pages_host = var.pages_host
+        grafana_host = var.grafana_host
         email = var.email
         cluster_name = var.cluster_name
         

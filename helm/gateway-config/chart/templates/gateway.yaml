@@ -11,6 +11,13 @@ spec:
       kind: EnvoyProxy
       name: proxy-config
   listeners:
+    - name: tcp-ssh
+      protocol: TCP
+      port: 22
+      allowedRoutes:
+        namespaces:
+          from: All
+
     - name: http
       protocol: HTTP
       port: 80
