@@ -1,0 +1,48 @@
+name: terraform-unlock
+on:
+  workflow_dispatch:
+    inputs:
+      object:
+        description: "object"
+        required: true
+        type: string
+jobs:
+  destroy:
+    name: Destroy
+    runs-on: ubuntu-24.04
+    environment: production
+    env:
+      TF_VAR_domain_name: ${{ secrets.DOMAIN_NAME }}
+      TF_VAR_email: ${{ secrets.EMAIL }}
+      TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+      TF_VAR_do_dns_token: ${{ secrets.DO_DNS_TOKEN }}
+      TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_cloudflare_r2_endpoint: ${{ secrets.R2_ENDPOINT }}
+      TF_VAR_cloudflare_r2_access_key_id: ${{ secrets.R2_ACCESS_KEY_ID }}
+      TF_VAR_cloudflare_r2_secret_access_key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_KEY }}
+      TF_VAR_spaces_access_id: ${{ secrets.SPACES_ACCESS_ID }}
+      TF_VAR_spaces_secret_key: ${{ secrets.SPACES_SECRET_KEY }}
+      TF_VAR_sendgrid_api_key: ${{ secrets.SENDGRID_API_KEY }}
+      TF_VAR_git_repo: ${{ github.server_url }}/${{ github.repository }}
+      TF_VAR_git_token: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@5e8dbf3c6d9deaf4193ca7a8fb23f2ac83bb6c85
+        with:
+          terraform_version: "1.14.7"
+
+      - name: Initialize Terraform project
+        run: terraform init
+
+      - name: Run Terraform Remove State
+        run: terraform state rm ${{ inputs.objevt }}
+
+defaults:
+  run:
+    working-directory: ./terraform
