@@ -14,5 +14,5 @@ resources:
   - releases/external-dns.yaml
   - releases/gateway-config.yaml
   - releases/gitlab.yaml
-  - repositories/kube-prometheus-stack.yaml
+  - releases/kube-prometheus-stack.yaml
   - releases/reflector.yaml
