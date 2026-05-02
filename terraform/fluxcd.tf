@@ -25,6 +25,7 @@ resource "kubernetes_config_map_v1" "runtime_values" {
         buckets_lfs = cloudflare_r2_bucket.gitlab["lfs"].name
         buckets_registry = cloudflare_r2_bucket.gitlab["registry"].name
         buckets_pages = cloudflare_r2_bucket.gitlab["pages"].name
+        buckets_ci_secure_files = cloudflare_r2_bucket.gitlab["ci-secure-files"].name
     }
 
     depends_on = [ kubernetes_namespace_v1.flux_system ]

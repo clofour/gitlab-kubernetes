@@ -101,6 +101,13 @@ spec:
         pages:
           bucket: ${buckets_pages}
           connection: {}
+        externalDiffs:
+          enabled: false
+        dependencyProxy:
+          enabled: false
+        ciSecureFiles:
+          bucket: ${buckets_ci_secure_files}
+          connection: {}
 
       minio:
         enabled: false
