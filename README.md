@@ -1,5 +1,5 @@
 # gitlab-kubernetes
-This project is a deployment of GitLab and bootstrap components (ExternalDNS, CertManager, EnvoyGateway...) as well as monitoring (Grafana, Prometheus...) on DigitalOcean Kubernetes (DOKS) using Terraform and Flux CD.
+This project is a deployment of GitLab and bootstrap components (ExternalDNS, CertManager, EnvoyGateway...) as well as monitoring (Grafana, Prometheus...) on DigitalOcean Kubernetes (DOKS) using Terraform and Flux CD. It was designed to be usable without any DigitalOcean resource limit increases.
 
 ## Quick Start
 1. Fork this repository
@@ -7,6 +7,37 @@ This project is a deployment of GitLab and bootstrap components (ExternalDNS, Ce
 3. Trigger the GitHub action corresponding to what you want to do
 
 ## Knowledge Base
+### Architecture
+1. Terraform manages:
+   * Domain
+   * VPC
+   * Kubernetes cluster
+   * FluxCD bootstrap
+   * ConfigMap derived from non-sensitive Terraform values (e.g. database host, database port...)
+   * Secrets derived from sensitive Terraform values (e.g. database password, R2 access credentials...)
+   * Namespaces for the secrets
+   * PostgreSQL database
+   * Valkey database
+   * CloudFlare R2 buckets
+2. FluxCD bootstrap reconciliates ./flux
+3. Kustomization templates values using two ConfigMaps: runtime-values (from Terraform) and shared-values (from the repository)
+4. FluxCD manages repositories:
+   * cert-manager
+   * emberstack
+   * envoy-proxy
+   * external-dns
+   * gitlab
+   * prometheus-community
+5. FluxCD manages releases:
+   * cert-manager
+   * cluster-issuer
+   * dns01-certificate
+   * envoy-gateway
+   * external-dns
+   * gateway-config
+   * gitlab
+   * kube-prometheus-stack
+   * reflector
 ### Github Actions
 #### Index
 | Name | Description |
@@ -30,4 +61,5 @@ This project is a deployment of GitLab and bootstrap components (ExternalDNS, Ce
 | SPACES_ACCESS_ID | DigitalOcean Spaces access key ID |
 | SPACES_SECRET_KEY | DigitalOcean Spaces access key |
 | SENDGRID_API_KEY | Twilio SendGrid API key |
-
+### Limitations
+* The DigitalOcean Kubernetes cluster version is hardcoded in terraform/cluster.tf. This was done to prevent errors triggered by upgrades, as the Droplet limit is too low for these.
