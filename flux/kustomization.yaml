@@ -3,11 +3,11 @@ kind: Kustomization
 resources:
   - bootstrap/cluster-kustomization.yaml
   - bootstrap/shared-values.yaml
+  - repositories/cert-manager.yaml
   - repositories/emberstack.yaml
   - repositories/envoy-proxy.yaml
   - repositories/external-dns.yaml
   - repositories/gitlab.yaml
-  - repositories/jetstack.yaml
   - releases/cert-manager.yaml
   - releases/cluster-issuer.yaml
   - releases/dns01-certificate.yaml
