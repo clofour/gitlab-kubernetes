@@ -26,7 +26,10 @@ provider "flux" {
     }
     git = {
         url = var.git_repo
-        http = {}
+        http = {
+            username = "git"
+            password = var.git_token
+        }
     }
 }
 

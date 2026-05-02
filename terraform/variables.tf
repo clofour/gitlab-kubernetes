@@ -53,6 +53,11 @@ variable "git_repo" {
     type = string
 }
 
+variable "git_token" {
+    type = string
+    sensitive = true
+}
+
 
 variable "region" {
     type = string
