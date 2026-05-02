@@ -15,10 +15,12 @@ spec:
         kind: GitRepository
         name: flux-system
         namespace: flux-system
-  targetNamespace: cert-manager
+  targetNamespace: envoy-gateway-system
   install:
     createNamespace: true
   values:
-    name: wildcard-certificate
-    secretName: wildcard-certificate
-    issuer: letsencrypt
+    domain: ${domain}
+    dnsNameTemplates:
+      - ${domain}
+      - "*.${domain}"
+      - "*.pages.${domain}"
