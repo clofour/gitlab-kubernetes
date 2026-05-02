@@ -1,4 +1,4 @@
-name: terraform
+name: terraform-main
 on:
   push:
     branches:

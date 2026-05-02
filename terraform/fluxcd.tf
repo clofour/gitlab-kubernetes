@@ -1,7 +1,3 @@
-resource "flux_bootstrap_git" "flux_cd" {
-    path = "flux"
-}
-
 resource "kubernetes_config_map_v1" "runtime_values" {
     metadata {
         name = "runtime-values"
@@ -30,5 +26,9 @@ resource "kubernetes_config_map_v1" "runtime_values" {
         buckets_pages = cloudflare_r2_bucket.gitlab["pages"].name
     }
 
-    depends_on = [ flux_bootstrap_git.flux_cd ]
+    depends_on = [ kubernetes_namespace_v1.flux_system ]
+}
+
+resource "flux_bootstrap_git" "flux_cd" {
+    path = "flux"
 }

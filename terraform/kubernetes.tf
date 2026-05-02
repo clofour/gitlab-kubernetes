@@ -1,3 +1,11 @@
+resource "kubernetes_namespace_v1" "flux_system" {
+    metadata {
+      name = "flux-system"
+    }
+
+    depends_on = [ digitalocean_kubernetes_cluster.main ]
+}
+
 resource "kubernetes_namespace_v1" "external_dns" {
     metadata {
       name = "external-dns"
