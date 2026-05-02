@@ -26,7 +26,7 @@ resource "kubernetes_config_map_v1" "runtime_values" {
         buckets_registry = cloudflare_r2_bucket.gitlab["registry"].name
         buckets_pages = cloudflare_r2_bucket.gitlab["pages"].name
         buckets_external_diffs = cloudflare_r2_bucket.gitlab["external-diffs"].name
-        buckets_external_diffs = cloudflare_r2_bucket.gitlab["dependency-proxy"].name
+        buckets_dependency_proxy = cloudflare_r2_bucket.gitlab["dependency-proxy"].name
         buckets_ci_secure_files = cloudflare_r2_bucket.gitlab["ci-secure-files"].name
     }
 
