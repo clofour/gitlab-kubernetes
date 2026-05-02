@@ -37,7 +37,6 @@ jobs:
 
       - name: Run Terraform Destroy
         run: terraform destroy -auto-approve
-
 defaults:
   run:
     working-directory: ./terraform
