@@ -6,6 +6,7 @@ I made this project to learn about Terraform, Kubernetes, Helm, GitOps and the c
 ## Quick Start
 > [!WARNING]
 > This will cost real money.
+
 Before getting started, make sure you have a domain on DigitalOcean as well as all the required secrets.
 1. Fork this repository
 2. Delete all files in ./flux/flux-system
