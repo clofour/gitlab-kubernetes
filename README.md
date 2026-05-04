@@ -82,7 +82,7 @@ Before getting started, make sure you have a domain on DigitalOcean as well as a
 | terraform-unlock | Unlock the Terraform state |
 #### Environment Secrets
 | Name | Environment Variable | Terraform Variable |
-| --- | --- |
+| --- | --- | --- |
 | DOMAIN_NAME | TF_VAR_domain_name | domain_name |
 | EMAIL | TF_VAR_email | email |
 | DO_TOKEN | TF_VAR_do_token |do_token |
