@@ -1,3 +1,7 @@
+locals {
+    r2_region = cloudflare_r2_bucket.gitlab.artifacts.location
+}
+
 resource "kubernetes_namespace_v1" "flux_system" {
     metadata {
       name = "flux-system"
@@ -124,7 +128,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
     data = {
         connection = yamlencode({
             provider = "AWS"
-            region = var.region
+            region = local.r2_region
             endpoint = var.cloudflare_r2_endpoint
             aws_access_key_id = var.cloudflare_r2_access_key_id
             aws_secret_access_key = var.cloudflare_r2_secret_access_key
@@ -145,7 +149,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_main" {
 #         connection = yamlencode({
 #            accesskey = var.spaces_access_id
 #            secretkey = var.spaces_secret_key
-#            region = var.region
+#            region = var.r2_jurisdiction
 #            regionendpoint = ${{ secrets.R2_ACCESS_KEY_ID }}
 #            bucket = digitalocean_spaces_bucket.gitlab["registry"].name
 #         })
@@ -163,7 +167,7 @@ resource "kubernetes_secret_v1" "gitlab_s3_backup" {
     data = {
         connection = yamlencode({
             provider = "AWS"
-            region = var.region
+            region = local.r2_region
             endpoint = var.cloudflare_r2_endpoint
             aws_access_key_id = var.cloudflare_r2_access_key_id
             aws_secret_access_key = var.cloudflare_r2_secret_access_key
