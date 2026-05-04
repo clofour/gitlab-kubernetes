@@ -55,8 +55,6 @@ Before getting started, make sure you have a domain on DigitalOcean as well as a
 | cloudflare_r2_endpoint | CloudFlare R2 endpoint | |
 | cloudflare_r2_access_key_id | CloudFlare R2 access key ID | |
 | cloudflare_r2_secret_access_key | CloudFlare R2 access key | |
-| spaces_access_id | Unlock the Terraform state | |
-| spaces_secret_key | Unlock the Terraform state | |
 | sendgrid_api_key | Twilio SendGrid API key | |
 | git_repo | GitHub repository to sync with | |
 | git_token | GitHub PAT with write access to the GitHub repository | |
@@ -94,8 +92,6 @@ Before getting started, make sure you have a domain on DigitalOcean as well as a
 | R2_SECRET_ACCESS_KEY | TF_VAR_cloudflare_r2_secret_access_key | cloudflare_r2_secret_access_key |
 | SPACES_ACCESS_ID | AWS_ACCESS_KEY_ID | - |
 | SPACES_SECRET_KEY | AWS_SECRET_ACCESS_KEY | - |
-| SPACES_ACCESS_ID  | TF_VAR_spaces_access_id | spaces_access_id |
-| SPACES_SECRET_KEY | TF_VAR_spaces_secret_key | spaces_secret_key |
 | SENDGRID_API_KEY | TF_VAR_sendgrid_api_key | sendgrid_api_key |
 ### Limitations
 * The DigitalOcean Kubernetes cluster version is hardcoded in terraform/cluster.tf. This was done to prevent errors triggered by upgrades, as the Droplet limit is too low for these.
