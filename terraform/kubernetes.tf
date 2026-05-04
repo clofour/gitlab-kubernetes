@@ -1,5 +1,5 @@
 locals {
-    r2_region = cloudflare_r2_bucket.gitlab.artifacts.location
+    r2_region = cloudflare_r2_bucket.gitlab["artifacts"].location
 }
 
 resource "kubernetes_namespace_v1" "flux_system" {
