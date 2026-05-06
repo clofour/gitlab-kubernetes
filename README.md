@@ -96,3 +96,4 @@ Before getting started, make sure you have a domain on DigitalOcean as well as a
 | SENDGRID_API_KEY | TF_VAR_sendgrid_api_key | sendgrid_api_key |
 ### Limitations
 * The DigitalOcean Kubernetes cluster version is hardcoded in terraform/cluster.tf. This was done to prevent errors triggered by upgrades, as the Droplet limit is too low for these.
+## Images
