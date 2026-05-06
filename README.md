@@ -97,3 +97,5 @@ Before getting started, make sure you have a domain on DigitalOcean as well as a
 ### Limitations
 * The DigitalOcean Kubernetes cluster version is hardcoded in terraform/cluster.tf. This was done to prevent errors triggered by upgrades, as the Droplet limit is too low for these.
 ## Images
+![GitLab](https://raw.githubusercontent.com/clofour/gitlab-kubernetes/refs/heads/main/docs/assets/gitlab.png)
+![Grafana](https://raw.githubusercontent.com/clofour/gitlab-kubernetes/refs/heads/main/docs/assets/grafana.png))
