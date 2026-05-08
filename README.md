@@ -1,5 +1,5 @@
 # gitlab-kubernetes
-This project is a deployment of GitLab and bootstrap components (ExternalDNS, CertManager, EnvoyGateway...) as well as monitoring (Grafana, Prometheus...) on DigitalOcean Kubernetes (DOKS) using Terraform and Flux CD. It was designed to be usable without any DigitalOcean resource limit increases. A demonstration is available at [gitlab.twilightzone.dev](gitlab.twilightzone.dev).
+This project is a deployment of GitLab and bootstrap components (ExternalDNS, CertManager, EnvoyGateway...) as well as monitoring (Grafana, Prometheus...) on DigitalOcean Kubernetes (DOKS) using Terraform and Flux CD. It was designed to be usable without any DigitalOcean resource limit increases.
 
 I made this project to learn about Terraform, Kubernetes, Helm, GitOps and the complexities of managing distributed systems. I chose GitLab because it is personally useful to me as someone who programs very frequently.
 
